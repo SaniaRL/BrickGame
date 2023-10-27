@@ -1,12 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BrickGame extends JFrame implements MouseListener{
+public class BrickGame extends JFrame{
 
     //regions are to hide the code in the region - so it's easier to navigate
 
@@ -97,32 +97,75 @@ public class BrickGame extends JFrame implements MouseListener{
     //This code can be done in the Mouse Listener
     public void addMouseListener(){
         int empty = labelList.indexOf(getEmptyLabel());
-        int x = empty / 4;
-        int y = empty % 4;
-        if(y < 3){
-            JLabel label = labelList.get(empty+1);
-            label.addMouseListener(this);
-            revalidate();
-            repaint();
+        int x = empty % 4; //x = 0, 1, 2, 3
+        int y = empty / 4; //y = 0, 1, 2, 3
+        List<JLabel> nextDoorNeighbors = new ArrayList<>();
+        List<JLabel> closeNeighbors = new ArrayList<>();
+        List<JLabel> neighbors = new ArrayList<>();
+
+        if(x < 1){
+            neighbors.add(labelList.get(empty + 3));
         }
-        if(y != 0){
-            JLabel label = labelList.get(empty-1);
-            label.addMouseListener(this);
-            revalidate();
-            repaint();
+        if(x < 2){
+            closeNeighbors.add(labelList.get(empty + 2));
         }
         if(x < 3){
-            JLabel label = labelList.get(empty + 4);
-            label.addMouseListener(this);
+            nextDoorNeighbors.add(labelList.get(empty + 1));
+        }
+
+        if(x != 0){
+            nextDoorNeighbors.add(labelList.get(empty - 1));
+        }
+        if(x > 1){
+            closeNeighbors.add(labelList.get(empty - 2));
+        }
+        if(x > 2){
+            neighbors.add(labelList.get(empty - 3));
+        }
+
+
+
+        if(y < 3){
+            nextDoorNeighbors.add(labelList.get(empty + 4));
+        }
+        if(y < 2){
+            closeNeighbors.add(labelList.get(empty + 8));
+        }
+        if(y < 1){
+            neighbors.add(labelList.get(empty + 12));
+        }
+
+
+        if(y > 0){
+            nextDoorNeighbors.add(labelList.get(empty - 4));
+        }
+        if(y > 1){
+            closeNeighbors.add(labelList.get(empty - 8));
+        }
+        if(y > 2){
+            neighbors.add(labelList.get(empty - 12));
+        }
+
+        for(JLabel label : nextDoorNeighbors){
+            label.addMouseListener(nextDoorNeighbourMouseAdapter);
             label.revalidate();
             label.repaint();
         }
-        if(x > 0){
-            JLabel label = labelList.get(empty - 4);
-            label.addMouseListener(this);
+
+        for(JLabel label : closeNeighbors){
+            label.addMouseListener(closeNeighbourMouseAdapter);
             label.revalidate();
             label.repaint();
         }
+
+        for(JLabel label : neighbors){
+            label.addMouseListener(neighbourMouseAdapter);
+            label.revalidate();
+            label.repaint();
+        }
+
+
+
     }
     //Method to change Position of the text and color of the JLabel with the text and color of the "empty" JLabel
     public void changePosition(JLabel label){
@@ -140,55 +183,172 @@ public class BrickGame extends JFrame implements MouseListener{
 
     //region<MouseListener>
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if(e.getSource() instanceof JLabel labelClicked){
-            for(JLabel label : labelList){
-                label.removeMouseListener(this);
+    MouseAdapter nextDoorNeighbourMouseAdapter = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            if(e.getSource() instanceof JLabel labelClicked){
+                for(JLabel label : labelList){
+                    label.removeMouseListener(this);
+                }
+                changePosition(labelClicked);
+                addMouseListener();
+                repaint();
+                revalidate();
             }
-            changePosition(labelClicked);
-            addMouseListener();
-            repaint();
-            revalidate();
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            super.mouseEntered(e);
+            if(e.getSource() instanceof JLabel label){
+                label.setBackground(new Color(141,249,137));
+                label.revalidate();
+                label.repaint();
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            super.mouseExited(e);
+            if(e.getSource() instanceof JLabel label){
+                label.setBackground(Color.LIGHT_GRAY);
+                label.revalidate();
+                label.repaint();
+            }
+
+        }
+    };
+
+    MouseAdapter closeNeighbourMouseAdapter = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            if(e.getSource() instanceof JLabel labelClicked){
+                for(JLabel label : labelList){
+                    label.removeMouseListener(this);
+                }
+                int iLabelClicked = labelList.indexOf(labelClicked);
+                int iEmptyLabel = labelList.indexOf(getEmptyLabel());
+                int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
+                if(i == - 8){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 4);
+                    changePosition(inBetweenLabel);
+                    changePosition(labelClicked);
+                }
+                if(i == 8){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 4);
+                    changePosition(inBetweenLabel);
+                    changePosition(labelClicked);
+                }
+                if(i == - 2){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 1);
+                    changePosition(inBetweenLabel);
+                    changePosition(labelClicked);
+                }
+                if(i == 2){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 2);
+                    changePosition(inBetweenLabel);
+                    changePosition(labelClicked);
+                }
+                addMouseListener();
+                repaint();
+                revalidate();
+            }
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            super.mouseEntered(e);
+            if(e.getSource() instanceof JLabel label){
+                label.setBackground(new Color(141,249,137));
+                label.revalidate();
+                label.repaint();
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            super.mouseExited(e);
+            if(e.getSource() instanceof JLabel label){
+                label.setBackground(Color.LIGHT_GRAY);
+                label.revalidate();
+                label.repaint();
+            }
+
+        }
+    };
+
+    MouseAdapter neighbourMouseAdapter = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            if(e.getSource() instanceof JLabel labelClicked){
+                for(JLabel label : labelList){
+                    label.removeMouseListener(this);
+                }
+                int iLabelClicked = labelList.indexOf(labelClicked);
+                int iEmptyLabel = labelList.indexOf(getEmptyLabel());
+                int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
+                if(i == - 12){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 4);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 8);
+                    changePosition(inBetweenLabel);
+                    changePosition(inBetweenLabel2);
+                    changePosition(labelClicked);
+                }
+                if(i == 12){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 4);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + 8);
+                    changePosition(inBetweenLabel);
+                    changePosition(inBetweenLabel2);
+                    changePosition(labelClicked);
+                }
+                if(i == - 3){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 1);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 2);
+                    changePosition(inBetweenLabel);
+                    changePosition(inBetweenLabel2);
+                    changePosition(labelClicked);
+                }
+                if(i == 3){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 1);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + 2);
+                    changePosition(inBetweenLabel);
+                    changePosition(inBetweenLabel2);
+                    changePosition(labelClicked);
+                }
+
+                addMouseListener();
+                repaint();
+                revalidate();
+            }
 
         }
 
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        if(e.getSource() instanceof JLabel label){
-            label.setBackground(new Color(141,249,137));
-            label.revalidate();
-            label.repaint();
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            super.mouseEntered(e);
+            if(e.getSource() instanceof JLabel label){
+                label.setBackground(new Color(141,249,137));
+                label.revalidate();
+                label.repaint();
+            }
         }
-    }
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-        //Kod för att se om musen blivit klickad
-        if(e.getSource() instanceof JLabel label){
-            label.setBackground(Color.LIGHT_GRAY);
-            label.revalidate();
-            label.repaint();
+        @Override
+        public void mouseExited(MouseEvent e) {
+            super.mouseExited(e);
+            if(e.getSource() instanceof JLabel label){
+                label.setBackground(Color.LIGHT_GRAY);
+                label.revalidate();
+                label.repaint();
+            }
+
         }
-    }
+    };
+
 
     //endregion
 
-    //region<Check even more bricks to move>
-
-
-
-    //endregion
 }
