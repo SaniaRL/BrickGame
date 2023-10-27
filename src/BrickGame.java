@@ -1,9 +1,13 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class BrickGame {
+public class BrickGame extends JFrame{
 
+    //region<JFrame>
+    JPanel backgroundPanel = new JPanel();          //Background JPanel to hold JLabels
     //region<Labels and labelList>
     List<JLabel> labelList = new ArrayList<>();     //List to hold JLabels
     //JLabels:
@@ -84,9 +88,65 @@ public class BrickGame {
     }
     //endregion
 
+    public void addComponents(){
+        setLayout(new BorderLayout());
+        setSize(400,400);
+        setVisible(true);
+        add(backgroundPanel, BorderLayout.CENTER);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        backgroundPanel.setLayout(new GridLayout(4, 4));
+        backgroundPanel.setBackground(Color.BLACK);
+        backgroundPanel.setOpaque(true);
+
+        backgroundPanel.add(label1);
+        backgroundPanel.add(label2);
+        backgroundPanel.add(label3);
+        backgroundPanel.add(label4);
+        backgroundPanel.add(label5);
+        backgroundPanel.add(label6);
+        backgroundPanel.add(label7);
+        backgroundPanel.add(label8);
+        backgroundPanel.add(label9);
+        backgroundPanel.add(label10);
+        backgroundPanel.add(label11);
+        backgroundPanel.add(label12);
+        backgroundPanel.add(label13);
+        backgroundPanel.add(label14);
+        backgroundPanel.add(label15);
+        backgroundPanel.add(label16);
+    }
+
+    public void addNumbersToLabels(List<String> numberList){
+        for(int i = 0; i < labelList.size() && labelList.size() == numberList.size(); i++){
+            JLabel label = labelList.get(i);
+            String number = numberList.get(i);
+            label.setText(number);
+            label.setAlignmentX(CENTER_ALIGNMENT);
+            label.setAlignmentY(CENTER_ALIGNMENT);
+            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setVerticalAlignment(JLabel.CENTER);
+            label.setBackground(Color.LIGHT_GRAY);
+            label.setFont(new Font("Arial", Font.BOLD, 25));
+            label.setOpaque(true);
+            label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+            if(number.equals(" ")){
+                label.setBackground(Color.BLACK);
+
+            }
+        }
+    }
+
+    //endregion
+
     public void run(){
         addToLabelList();
         addToNumberList();
+        addComponents();
+        Collections.shuffle(randomNumberList);      //Randomize order/shuffle Strings to add on JLabels
+        addNumbersToLabels(randomNumberList);       //Add numbers to JLabels
     }
 
     public static void main(String[] args) {
