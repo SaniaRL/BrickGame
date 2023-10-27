@@ -66,7 +66,7 @@ public class BrickGame extends JFrame implements MouseListener{
     }
     //endregion
 
-    //Method to Start Program instead of having the code in constructor.
+    //Method to start Program instead of having the code in constructor.
     //To avoid warning that the variable in main is unused.
     public void run(){
         addToNumberList(); //Add Numbers To List
@@ -76,11 +76,13 @@ public class BrickGame extends JFrame implements MouseListener{
     }
 
     public static void main(String[] args) {
+        //If we use this we can put the code in run() in constructor and still avoid warning
+        @SuppressWarnings("unused")
         BrickGame brickGame = new BrickGame(); //Create new instance of BrickGame
-        brickGame.run(); //Run the program
+        brickGame.run(); //Method to run the program
     }
 
-    //region<Code I Couldn't make this code work well in another class but might move if I can make it work>
+    //region<I Couldn't make this code work well in another class but might move if I can make it work>
 
     //Method to find the JLabel that is currently empty (containing " ")
     public JLabel getEmptyLabel(){
@@ -136,7 +138,7 @@ public class BrickGame extends JFrame implements MouseListener{
 
     //endregion
 
-    //region<MouseAction>
+    //region<MouseListener>
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -184,4 +186,9 @@ public class BrickGame extends JFrame implements MouseListener{
 
     //endregion
 
+    //region<Check even more bricks to move>
+
+
+
+    //endregion
 }
