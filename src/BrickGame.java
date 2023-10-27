@@ -1,9 +1,15 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class BrickGame {
+public class BrickGame extends JFrame{
 
+    //regions are to hide the code in the region - so it's easier to navigate
+
+    //region<JFrame>
+    JPanel backgroundPanel = new JPanel();          //Background JPanel to hold JLabels
     //region<Labels and labelList>
     List<JLabel> labelList = new ArrayList<>();     //List to hold JLabels
     //JLabels:
@@ -24,7 +30,7 @@ public class BrickGame {
     JLabel label15 = new JLabel();
     JLabel label16 = new JLabel();
 
-    public void addToLabelList(){
+    public void addToLabelList(){                   //Add Labels to ArrayList
         labelList.add(label1);
         labelList.add(label2);
         labelList.add(label3);
@@ -47,6 +53,9 @@ public class BrickGame {
     //region<Numbers & numberList>
     List<String> numberList = new ArrayList<>();    //NumberList in the right order
     List<String> randomNumberList = numberList;     //NumberList to randomize
+    //Strings instead of int for two reason.
+    // 1. The values are not used as values.
+    // 2. We can use the method JLabel.addText() directly without typecasting.
     String one = "1";
     String two = "2";
     String three = "3";
@@ -64,7 +73,8 @@ public class BrickGame {
     String fifteen = "15";
     String empty = " ";
 
-    public void addToNumberList(){
+    public void addToNumberList(){                  //Add Numbers(Strings) to ArrayList
+        //Repeated code. We can ignore warnings. Or try to find a better practice. This works.
         numberList.add(one);
         numberList.add(two);
         numberList.add(three);
@@ -84,13 +94,72 @@ public class BrickGame {
     }
     //endregion
 
+    public void addComponents(){
+        setLayout(new BorderLayout());  //Set Layout
+        setSize(400,400);   //Set Size - Should not be Square when we add a Button.
+        setVisible(true);   //Make JFrame Visible
+        add(backgroundPanel, BorderLayout.CENTER);  //Background Panel is positioned Center. Button can be NORTH or SOUTH?
+        setDefaultCloseOperation(EXIT_ON_CLOSE);    //Make the Close Button work.
+        setLocationRelativeTo(null);    //Make the Frame appear in the middle of the screen.
+
+        backgroundPanel.setLayout(new GridLayout(4, 4));    //4 * 4 Layout for the 16 Labels.
+        backgroundPanel.setBackground(Color.BLACK); //Set Color. Color not important. Can be whatever.
+        backgroundPanel.setOpaque(true);    //Make Opaque so Background can be seen.
+
+        //Add JLabels to Background Panel
+        backgroundPanel.add(label1);
+        backgroundPanel.add(label2);
+        backgroundPanel.add(label3);
+        backgroundPanel.add(label4);
+        backgroundPanel.add(label5);
+        backgroundPanel.add(label6);
+        backgroundPanel.add(label7);
+        backgroundPanel.add(label8);
+        backgroundPanel.add(label9);
+        backgroundPanel.add(label10);
+        backgroundPanel.add(label11);
+        backgroundPanel.add(label12);
+        backgroundPanel.add(label13);
+        backgroundPanel.add(label14);
+        backgroundPanel.add(label15);
+        backgroundPanel.add(label16);
+    }
+
+    //Method to add Numbers to JLabels and att the same time change the appearance of the JLabels.
+    //Center Alignment and Border are usable, Font and other design choices are less important.
+    //In this way it gets done with less code.
+    public void addNumbersToLabels(List<String> numberList){
+        //First make sure the Lists have the same amount of content
+        //Then loop through them and add each number to the corresponding JLabel
+        for(int i = 0; i < labelList.size() && labelList.size() == numberList.size(); i++){
+            JLabel label = labelList.get(i); //Get the JLabel at position i.
+            String number = numberList.get(i); //Get the String number at position i.
+            label.setText(number); //Set the String number to JLabel.
+            label.setHorizontalAlignment(JLabel.CENTER); //Align Center on the X-axis.
+            label.setVerticalAlignment(JLabel.CENTER); //Align Center on the Y-axis.
+            label.setBackground(Color.LIGHT_GRAY); //Color Choice. Not important.
+            label.setFont(new Font("Arial", Font.BOLD, 25)); //Font Choice. Not Important.
+            label.setOpaque(true); //Make Opaque so Background will show.
+            label.setBorder(BorderFactory.createLineBorder(Color.BLACK)); //Create Border that matches BackgroundPane.
+
+            if(number.equals(" ")){
+                label.setBackground(Color.BLACK); //Make the "empty" JLabel black.
+            }
+        }
+    }
+
+    //endregion
+
     public void run(){
-        addToLabelList();
-        addToNumberList();
+        addToLabelList(); //Add JLabels To List.
+        addToNumberList(); //Add Numbers To List
+        addComponents(); //Add All Components
+        Collections.shuffle(randomNumberList); //Randomize order/shuffle Strings to add on JLabels
+        addNumbersToLabels(randomNumberList); //Add numbers to JLabels
     }
 
     public static void main(String[] args) {
-        BrickGame brickGame = new BrickGame();
-        brickGame.run();
+        BrickGame brickGame = new BrickGame(); //Create new instance of BrickGame
+        brickGame.run(); //Run the program
     }
 }
