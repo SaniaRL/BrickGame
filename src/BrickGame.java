@@ -7,8 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class BrickGame extends JFrame implements MouseListener{
-    //Add instances of Classes in this Project
-    Logic logic = new Logic();
 
     //regions are to hide the code in the region - so it's easier to navigate
 
@@ -154,6 +152,8 @@ public class BrickGame extends JFrame implements MouseListener{
     }
     //endregion
 
+    //Method to Start Program instead of having the code in constructor.
+    //To avoid warning that the variable in main is unused.
     public void run(){
         addToLabelList(); //Add JLabels To List.
         addToNumberList(); //Add Numbers To List
