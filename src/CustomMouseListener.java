@@ -3,7 +3,10 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class CustomMouseListener implements MouseListener {
+public class CustomMouseListener //implements MouseListener
+{
+    //Code does not work in separate class. Will try to fix.
+    /*
     @Override
     public void mouseClicked(MouseEvent e) {
         if(e.getSource() instanceof JLabel labelClicked){
@@ -48,4 +51,6 @@ public class CustomMouseListener implements MouseListener {
             label.repaint();
         }
     }
+
+     */
 }

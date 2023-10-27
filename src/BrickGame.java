@@ -159,7 +159,7 @@ public class BrickGame extends JFrame implements MouseListener{
         addComponents(); //Add All Components
         Collections.shuffle(randomNumberList); //Randomize order/shuffle Strings to add on JLabels
         addNumbersToLabels(randomNumberList); //Add numbers to JLabels
-
+        addMouseListener(); //Add MouseListener
     }
 
     public static void main(String[] args) {
