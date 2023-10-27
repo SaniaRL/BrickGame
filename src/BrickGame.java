@@ -14,6 +14,7 @@ public class BrickGame extends JFrame implements MouseListener{
 
     //region<JFrame>
     JPanel backgroundPanel = new JPanel();          //Background JPanel to hold JLabels
+
     //region<Labels and labelList>
     List<JLabel> labelList = new ArrayList<>();     //List to hold JLabels
     //JLabels:
@@ -167,16 +168,17 @@ public class BrickGame extends JFrame implements MouseListener{
         brickGame.run(); //Run the program
     }
 
-    //region<Code I Couldn't makw work in another class but might move if I can fix it
+    //region<Code I Couldn't make this code work well in another class but might move if I can make it work>
 
+    //Method to find the JLabel that is currently empty (containing " ")
     public JLabel getEmptyLabel(){
-        JLabel emptyLabel = null;
-        for (JLabel label : labelList){
-            if(label.getText().equals(" ")){
-                emptyLabel = label;
+        JLabel emptyLabel = null; //This method returns a JLabel, so we need to initiate it. It starts as null.
+        for (JLabel label : labelList){ //For-loop for each JLabel in labelList.
+            if(label.getText().equals(" ")){ //Only performs code-block if JLabel is the "empty" one.
+                emptyLabel = label; //Gives the address of the "empty" label to the locally declared empty label
             }
         }
-        return emptyLabel;
+        return emptyLabel; //Returns the actual emptyLabel - because they share the address.
     }
     public void addMouseListener(){
         int empty = labelList.indexOf(getEmptyLabel());
