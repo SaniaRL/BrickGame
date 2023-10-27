@@ -12,7 +12,7 @@ public class CustomMouseListener implements MouseListener {
             for(JLabel label : brickGame.labelList){
                 label.removeMouseListener(this);
             }
-            logic.changePosition(brickGame.labelList, labelClicked);
+            logic.changePosition(labelClicked);
             logic.addMouseListener();
             brickGame.repaint();
             brickGame.revalidate();
@@ -33,7 +33,7 @@ public class CustomMouseListener implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-()        if(e.getSource() instanceof JLabel label){
+        if(e.getSource() instanceof JLabel label){
             label.setBackground(new Color(141,249,137));
             label.revalidate();
             label.repaint();

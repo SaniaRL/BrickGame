@@ -1,11 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BrickGame extends JFrame {
+public class BrickGame extends JFrame implements MouseListener{
     //Add instances of Classes in this Project
     Logic logic = new Logic();
 
@@ -165,4 +166,106 @@ public class BrickGame extends JFrame {
         BrickGame brickGame = new BrickGame(); //Create new instance of BrickGame
         brickGame.run(); //Run the program
     }
+
+    //region<Code I Couldn't makw work in another class but might move if I can fix it
+
+    public JLabel getEmptyLabel(){
+        JLabel emptyLabel = null;
+        for (JLabel label : labelList){
+            if(label.getText().equals(" ")){
+                emptyLabel = label;
+            }
+        }
+        return emptyLabel;
+    }
+    public void addMouseListener(){
+        int empty = labelList.indexOf(getEmptyLabel());
+        int x = empty / 4;
+        int y = empty % 4;
+        if(y < 3){
+            JLabel label = labelList.get(empty+1);
+            label.addMouseListener(this);
+            revalidate();
+            repaint();
+        }
+        if(y != 0){
+            JLabel label = labelList.get(empty-1);
+            label.addMouseListener(this);
+            revalidate();
+            repaint();
+        }
+        if(x < 3){
+            JLabel label = labelList.get(empty + 4);
+            label.addMouseListener(this);
+            label.revalidate();
+            label.repaint();
+        }
+        if(x > 0){
+            JLabel label = labelList.get(empty - 4);
+            label.addMouseListener(this);
+            label.revalidate();
+            label.repaint();
+        }
+    }
+    public void changePosition(JLabel label){
+        JLabel temp = getEmptyLabel();
+        String tempText = label.getText();
+        temp.setText(tempText);
+        temp.setBackground(Color.LIGHT_GRAY);
+        label.setBackground(Color.BLACK);
+        label.setText(" ");
+        repaint();
+        revalidate();
+    }
+
+    //endregion
+
+    //region<MouseAction>
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if(e.getSource() instanceof JLabel labelClicked){
+            for(JLabel label : labelList){
+                label.removeMouseListener(this);
+            }
+            changePosition(labelClicked);
+            addMouseListener();
+            repaint();
+            revalidate();
+
+        }
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if(e.getSource() instanceof JLabel label){
+            label.setBackground(new Color(141,249,137));
+            label.revalidate();
+            label.repaint();
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        //Kod för att se om musen blivit klickad
+        if(e.getSource() instanceof JLabel label){
+            label.setBackground(Color.LIGHT_GRAY);
+            label.revalidate();
+            label.repaint();
+        }
+    }
+
+    //endregion
+
 }

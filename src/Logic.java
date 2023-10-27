@@ -4,7 +4,11 @@ import java.util.List;
 
 public class Logic {
 
+    //Commented out Code because it didn't work in a separate class
+
+    /*
     CustomMouseListener customMouseListener = new CustomMouseListener();
+    BrickGame brickGame = new BrickGame();
 
     public JLabel getEmptyLabel(List<JLabel> labelList){
         JLabel emptyLabel = null;
@@ -16,7 +20,7 @@ public class Logic {
         return emptyLabel;
     }
 
-    /*public void changePosition(BrickGame brickGame, List<JLabel> labelList, JLabel label){
+    public void changePosition(BrickGame brickGame, List<JLabel> labelList, JLabel label){
         JLabel temp = getEmptyLabel(labelList);
         String tempText = label.getText();
         temp.setText(tempText);
@@ -27,10 +31,10 @@ public class Logic {
         brickGame.revalidate();
     }
 
-     */
 
-    public void changePosition(List<JLabel> labelList, JLabel label){
-        JLabel temp = getEmptyLabel(labelList);
+
+    public void changePosition(JLabel label){
+        JLabel temp = getEmptyLabel(brickGame.labelList);
         String tempText = label.getText();
         temp.setText(tempText);
         temp.setBackground(Color.LIGHT_GRAY);
@@ -72,21 +76,6 @@ public class Logic {
         }
     }
 
-    public void changePosition(JPanel backgroundPanel, List<JLabel> labelList) {
-        int empty = labelList.indexOf(getEmptyLabel(labelList));
-        int x = empty / 4;
-        int y = empty % 4;
-        if (y < 3) {
-            JLabel label = labelList.get(empty + 1);
-            label.addMouseListener(new CustomMouseListener());
-            label.revalidate();
-            label.repaint();
-        }
-        if (y < 3) {
-            JLabel label = labelList.get(empty - 1);
-            label.revalidate();
-            label.repaint();
-        }
-    }
+     */
 
 }
