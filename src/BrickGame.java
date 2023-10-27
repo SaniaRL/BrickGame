@@ -110,6 +110,33 @@ public class BrickGame extends JFrame implements MouseListener{
         gamePanel.setOpaque(true);    //Make Opaque so Background can be seen.
 
         //Add JLabels to Background Panel
+        for(int i = 0; i < 16; i++){
+            JLabel label = new JLabel();
+            label.setText(numberList.get(i));
+            labelList.add(label);
+            gamePanel.add(label);
+
+            label.setHorizontalAlignment(JLabel.CENTER); //Align Center on the X-axis.
+            label.setVerticalAlignment(JLabel.CENTER); //Align Center on the Y-axis.
+            label.setBackground(Color.LIGHT_GRAY); //Color Choice. Not important.
+            label.setFont(new Font("Arial", Font.BOLD, 25)); //Font Choice. Not Important.
+            label.setOpaque(true); //Make Opaque so Background will show.
+            label.setBorder(BorderFactory.createLineBorder(Color.BLACK)); //Create Border that matches BackgroundPane.
+            if(label.getText().equals(" ")){
+                label.setBackground(Color.BLACK); //Make the "empty" JLabel black.
+            }
+        }
+/*
+        for(int i = 0; i < labelList.size() && labelList.size() == numberList.size(); i++){
+            JLabel label = labelList.get(i); //Get the JLabel at position i.
+            String number = numberList.get(i); //Get the String number at position i.
+            label.setText(number); //Set the String number to JLabel.
+
+        }
+
+ */
+
+        /*
         gamePanel.add(label1);
         gamePanel.add(label2);
         gamePanel.add(label3);
@@ -126,40 +153,36 @@ public class BrickGame extends JFrame implements MouseListener{
         gamePanel.add(label14);
         gamePanel.add(label15);
         gamePanel.add(label16);
+         */
     }
 
     //Method to add Numbers to JLabels and att the same time change the appearance of the JLabels.
     //Center Alignment and Border are usable, Font and other design choices are less important.
     //In this way it gets done with less code.
-    public void addNumbersToLabels(List<String> numberList){
+   /* public void addNumbersToLabels(List<String> numberList){
         //First make sure the Lists have the same amount of content
         //Then loop through them and add each number to the corresponding JLabel
         for(int i = 0; i < labelList.size() && labelList.size() == numberList.size(); i++){
             JLabel label = labelList.get(i); //Get the JLabel at position i.
             String number = numberList.get(i); //Get the String number at position i.
             label.setText(number); //Set the String number to JLabel.
-            label.setHorizontalAlignment(JLabel.CENTER); //Align Center on the X-axis.
-            label.setVerticalAlignment(JLabel.CENTER); //Align Center on the Y-axis.
-            label.setBackground(Color.LIGHT_GRAY); //Color Choice. Not important.
-            label.setFont(new Font("Arial", Font.BOLD, 25)); //Font Choice. Not Important.
-            label.setOpaque(true); //Make Opaque so Background will show.
-            label.setBorder(BorderFactory.createLineBorder(Color.BLACK)); //Create Border that matches BackgroundPane.
-
             if(number.equals(" ")){
                 label.setBackground(Color.BLACK); //Make the "empty" JLabel black.
             }
         }
     }
+
+    */
     //endregion
 
     //Method to Start Program instead of having the code in constructor.
     //To avoid warning that the variable in main is unused.
     public void run(){
-        addToLabelList(); //Add JLabels To List.
         addToNumberList(); //Add Numbers To List
+        addToLabelList(); //Add JLabels To List.
         addComponents(); //Add All Components
         Collections.shuffle(randomNumberList); //Randomize order/shuffle Strings to add on JLabels
-        addNumbersToLabels(randomNumberList); //Add numbers to JLabels
+        //addNumbersToLabels(randomNumberList); //Add numbers to JLabels
         addMouseListener(); //Add MouseListener
     }
 
