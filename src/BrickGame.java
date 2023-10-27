@@ -1,10 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BrickGame extends JFrame{
+public class BrickGame extends JFrame {
     //Add instances of Classes in this Project
     Logic logic = new Logic();
 
@@ -157,6 +158,7 @@ public class BrickGame extends JFrame{
         addComponents(); //Add All Components
         Collections.shuffle(randomNumberList); //Randomize order/shuffle Strings to add on JLabels
         addNumbersToLabels(randomNumberList); //Add numbers to JLabels
+
     }
 
     public static void main(String[] args) {
