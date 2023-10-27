@@ -85,7 +85,8 @@ public class BrickGame {
     //endregion
 
     public void run(){
-        System.out.println("Kör Program");
+        addToLabelList();
+        addToNumberList();
     }
 
     public static void main(String[] args) {
