@@ -11,7 +11,7 @@ public class BrickGame extends JFrame implements MouseListener{
     //regions are to hide the code in the region - so it's easier to navigate
 
     //region<JFrame>
-    JPanel backgroundPanel = new JPanel();          //Background JPanel to hold JLabels
+    JPanel gamePanel = new JPanel();          //Background JPanel to hold JLabels
 
     //region<Labels and labelList>
     List<JLabel> labelList = new ArrayList<>();     //List to hold JLabels
@@ -100,32 +100,32 @@ public class BrickGame extends JFrame implements MouseListener{
     public void addComponents(){
         setLayout(new BorderLayout());  //Set Layout
         setSize(400,400);   //Set Size - Should not be Square when we add a Button.
-        setVisible(true);   //Make JFrame Visible
-        add(backgroundPanel, BorderLayout.CENTER);  //Background Panel is positioned Center. Button can be NORTH or SOUTH?
+        setVisible(true);   //Make JFrame Visible.
+        add(gamePanel, BorderLayout.CENTER);  //Background Panel is positioned Center. Button can be NORTH or SOUTH?
         setDefaultCloseOperation(EXIT_ON_CLOSE);    //Make the Close Button work.
         setLocationRelativeTo(null);    //Make the Frame appear in the middle of the screen.
 
-        backgroundPanel.setLayout(new GridLayout(4, 4));    //4 * 4 Layout for the 16 Labels.
-        backgroundPanel.setBackground(Color.BLACK); //Set Color. Color not important. Can be whatever.
-        backgroundPanel.setOpaque(true);    //Make Opaque so Background can be seen.
+        gamePanel.setLayout(new GridLayout(4, 4));    //4 * 4 Layout for the 16 Labels.
+        gamePanel.setBackground(Color.BLACK); //Set Color. Color not important. Can be whatever.
+        gamePanel.setOpaque(true);    //Make Opaque so Background can be seen.
 
         //Add JLabels to Background Panel
-        backgroundPanel.add(label1);
-        backgroundPanel.add(label2);
-        backgroundPanel.add(label3);
-        backgroundPanel.add(label4);
-        backgroundPanel.add(label5);
-        backgroundPanel.add(label6);
-        backgroundPanel.add(label7);
-        backgroundPanel.add(label8);
-        backgroundPanel.add(label9);
-        backgroundPanel.add(label10);
-        backgroundPanel.add(label11);
-        backgroundPanel.add(label12);
-        backgroundPanel.add(label13);
-        backgroundPanel.add(label14);
-        backgroundPanel.add(label15);
-        backgroundPanel.add(label16);
+        gamePanel.add(label1);
+        gamePanel.add(label2);
+        gamePanel.add(label3);
+        gamePanel.add(label4);
+        gamePanel.add(label5);
+        gamePanel.add(label6);
+        gamePanel.add(label7);
+        gamePanel.add(label8);
+        gamePanel.add(label9);
+        gamePanel.add(label10);
+        gamePanel.add(label11);
+        gamePanel.add(label12);
+        gamePanel.add(label13);
+        gamePanel.add(label14);
+        gamePanel.add(label15);
+        gamePanel.add(label16);
     }
 
     //Method to add Numbers to JLabels and att the same time change the appearance of the JLabels.
