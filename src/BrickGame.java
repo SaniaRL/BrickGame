@@ -175,11 +175,12 @@ public class BrickGame extends JFrame implements MouseListener{
         JLabel emptyLabel = null; //This method returns a JLabel, so we need to initiate it. It starts as null.
         for (JLabel label : labelList){ //For-loop for each JLabel in labelList.
             if(label.getText().equals(" ")){ //Only performs code-block if JLabel is the "empty" one.
-                emptyLabel = label; //Gives the address of the "empty" label to the locally declared empty label
+                emptyLabel = label; //Gives the reference to the "empty" JLabel to the locally declared empty JLabel.
             }
         }
-        return emptyLabel; //Returns the actual emptyLabel - because they share the address.
+        return emptyLabel; //Returns the actual emptyLabel - because the references points to the same address.
     }
+    //This code can be done in the Mouse Listener
     public void addMouseListener(){
         int empty = labelList.indexOf(getEmptyLabel());
         int x = empty / 4;
@@ -209,8 +210,9 @@ public class BrickGame extends JFrame implements MouseListener{
             label.repaint();
         }
     }
+    //Method to change Position of the text and color of the JLabel with the text and color of the "empty" JLabel
     public void changePosition(JLabel label){
-        JLabel temp = getEmptyLabel();
+        JLabel temp = getEmptyLabel(); //Declare JLabel variable temp; Temporary reference that points to the "empty" JLabel
         String tempText = label.getText();
         temp.setText(tempText);
         temp.setBackground(Color.LIGHT_GRAY);
