@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class BrickGame extends JFrame{
+    //Add instances of Classes in this Project
+    Logic logic = new Logic();
 
     //regions are to hide the code in the region - so it's easier to navigate
 
@@ -147,7 +149,6 @@ public class BrickGame extends JFrame{
             }
         }
     }
-
     //endregion
 
     public void run(){
