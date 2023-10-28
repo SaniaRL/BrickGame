@@ -89,6 +89,19 @@ public class BrickGame extends JFrame{
         gamePanel.removeAll();
     }
 
+    // check if game is completed
+    private boolean isGameCompleted() {
+        boolean completedGame = true; // startar metoden med att säga att spelet är rätt!
+        // loop som kontrollerar alla brickor (hoppar över sista tomma brickan)
+        for (int i = 1; i < labelList.size(); i++) {
+            String siffraString = i + ""; // skapar en sträng som har värdet för första sifran i loopen (startar med siffran 1)
+            if (!siffraString.equals(labelList.get(i-1).getText())) { // get index startar från 0 och inte 1 (därför tar vi minus 1 hela tiden)
+                completedGame = false; // nu vet vi att en bricka inte är rätt placerat och då ändrar vi completdGame till false
+            }
+        }
+        return completedGame;
+    }
+
     public void addComponents(){
         setLayout(new BorderLayout());  //Set Layout
         setSize(400,400);   //Set Size - Should not be Square when we add a Button.
@@ -233,6 +246,14 @@ public class BrickGame extends JFrame{
                 addMouseListener();
                 repaint();
                 revalidate();
+                if (isGameCompleted()) {
+                    int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
+                            "Congratulation", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION) {
+                        reset(); // reset variables
+                        run(); // start new game
+                    }
+                }
             }
         }
 
@@ -292,6 +313,14 @@ public class BrickGame extends JFrame{
                 addMouseListener();
                 repaint();
                 revalidate();
+                if (isGameCompleted()) {
+                    int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
+                            "Congratulation", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION) {
+                        reset(); // reset variables
+                        run(); // start new game
+                    }
+                }
             }
         }
 
@@ -356,10 +385,17 @@ public class BrickGame extends JFrame{
                     changePosition(inBetweenLabel2);
                     changePosition(labelClicked);
                 }
-
                 addMouseListener();
                 repaint();
                 revalidate();
+                if (isGameCompleted()) {
+                    int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
+                            "Congratulation", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION) {
+                        reset(); // reset variables
+                        run(); // start new game
+                    }
+                }
             }
 
         }
