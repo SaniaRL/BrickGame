@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -7,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class BrickGame extends JFrame{
+    JMenu menu;
 
     //regions are to hide the code in the region - so it's easier to navigate
 
@@ -52,6 +55,40 @@ public class BrickGame extends JFrame{
         }
     }
 
+    public void addMenue() {
+        // chreate clicable menue item for NewGame
+        JMenuItem newGame =new JMenuItem("New game");
+        newGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                reset(); // reset variables
+                run(); // call run method to start game again
+            }
+        });
+        // chreate clicable menue item for Exit
+        JMenuItem closeGame =new JMenuItem("Exit");
+        closeGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                System.exit(0);
+            }
+        });
+
+        // create menu
+        menu = new JMenu("Menu");
+        menu.add(newGame);
+        menu.add(closeGame);
+        // create menu-bar area
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(menu);
+        // adds menue-bar area to JFrame
+        setJMenuBar(menuBar);
+    }
+
+    private void reset() {
+        labelList = new ArrayList<>();
+        randomNumberList = new ArrayList<>();
+        gamePanel.removeAll();
+    }
+
     public void addComponents(){
         setLayout(new BorderLayout());  //Set Layout
         setSize(400,400);   //Set Size - Should not be Square when we add a Button.
@@ -69,6 +106,7 @@ public class BrickGame extends JFrame{
     //Method to start Program instead of having the code in constructor.
     //To avoid warning that the variable in main is unused.
     public void run(){
+        addMenue(); // Add Menu with listener
         addToNumberList(); //Add Numbers To List
         addToLabelList(); //Add JLabels To List.
         addComponents(); //Add All Components
