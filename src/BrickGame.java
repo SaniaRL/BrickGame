@@ -13,20 +13,20 @@ public class BrickGame extends JFrame{
     //region<JFrame>
     JPanel gamePanel = new JPanel(); //Background JPanel to hold JLabels
     List<JLabel> labelList = new ArrayList<>(); //List to hold JLabels
-    List<String> numberList = new ArrayList<>(); //NumberList in the right order
-    List<String> randomNumberList = numberList; //NumberList to randomize
+    List<String> randomNumberList = new ArrayList<>(); //NumberList which is randomize
+
     //Strings instead of int for two reason.
-    // 1. The values are not used as values.
+    // 1. The values are not used as number-values.
     // 2. We can use the method JLabel.addText() directly without typecasting.
 
     //Updated code to avoid repetition, and keep code short and easy to manage.
     public void addToNumberList(){
         for(int i = 0; i < 16; i++){
             if(i == 0){
-                numberList.add(" ");
+                randomNumberList.add(" ");
             }
             else{
-                numberList.add(String.valueOf(i));
+                randomNumberList.add(String.valueOf(i));
             }
         }
         Collections.shuffle(randomNumberList);
@@ -36,7 +36,7 @@ public class BrickGame extends JFrame{
     public void addToLabelList(){
         for(int i = 0; i < 16; i++){
             JLabel label = new JLabel();
-            label.setText(numberList.get(i));
+            label.setText(randomNumberList.get(i));
             labelList.add(label);
             gamePanel.add(label);
 
@@ -169,10 +169,10 @@ public class BrickGame extends JFrame{
     }
     //Method to change Position of the text and color of the JLabel with the text and color of the "empty" JLabel
     public void changePosition(JLabel label){
-        JLabel temp = getEmptyLabel(); //Declare JLabel variable temp; Temporary reference that points to the "empty" JLabel
+        JLabel emptyLabel = getEmptyLabel(); //Declare JLabel variable temp; Temporary reference that points to the "empty" JLabel
         String tempText = label.getText();
-        temp.setText(tempText);
-        temp.setBackground(Color.LIGHT_GRAY);
+        emptyLabel.setText(tempText);
+        emptyLabel.setBackground(Color.LIGHT_GRAY);
         label.setBackground(Color.BLACK);
         label.setText(" ");
         repaint();
