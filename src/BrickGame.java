@@ -262,7 +262,9 @@ public class BrickGame extends JFrame{
             super.mouseClicked(e);
             if(e.getSource() instanceof JLabel labelClicked){
                 for(JLabel label : labelList){
-                    label.removeMouseListener(this);
+                    label.removeMouseListener(nextDoorNeighbourMouseAdapter);
+                    label.removeMouseListener(closeNeighbourMouseAdapter);
+                    label.removeMouseListener(neighbourMouseAdapter);
                 }
                 changePosition(labelClicked);
                 addMouseListener();
@@ -307,7 +309,9 @@ public class BrickGame extends JFrame{
             super.mouseClicked(e);
             if(e.getSource() instanceof JLabel labelClicked){
                 for(JLabel label : labelList){
-                    label.removeMouseListener(this);
+                    label.removeMouseListener(nextDoorNeighbourMouseAdapter);
+                    label.removeMouseListener(closeNeighbourMouseAdapter);
+                    label.removeMouseListener(neighbourMouseAdapter);
                 }
                 int iLabelClicked = labelList.indexOf(labelClicked);
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
@@ -374,11 +378,14 @@ public class BrickGame extends JFrame{
             super.mouseClicked(e);
             if(e.getSource() instanceof JLabel labelClicked){
                 for(JLabel label : labelList){
-                    label.removeMouseListener(this);
+                    label.removeMouseListener(nextDoorNeighbourMouseAdapter);
+                    label.removeMouseListener(closeNeighbourMouseAdapter);
+                    label.removeMouseListener(neighbourMouseAdapter);
                 }
                 int iLabelClicked = labelList.indexOf(labelClicked);
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
                 int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
+
                 if(i == - 12){
                     JLabel inBetweenLabel = labelList.get(iEmptyLabel - 4);
                     JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 8);
