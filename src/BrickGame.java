@@ -472,6 +472,34 @@ public class BrickGame extends JFrame{
         public void mouseEntered(MouseEvent e) {
             super.mouseEntered(e);
             if(e.getSource() instanceof JLabel label){
+                int iLabel = labelList.indexOf(label);
+                int iEmptyLabel = labelList.indexOf(getEmptyLabel());
+                int i = iLabel-labelList.indexOf(getEmptyLabel());
+                if(i == - 12){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 4);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 8);
+                    inBetweenLabel.setBackground(new Color(168, 252, 165));
+                    inBetweenLabel2.setBackground(new Color(168, 252, 165));
+                }
+                if(i == 12){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 4);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + 8);
+                    inBetweenLabel.setBackground(new Color(168, 252, 165));
+                    inBetweenLabel2.setBackground(new Color(168, 252, 165));
+                }
+                if(i == - 3){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 1);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 2);
+                    inBetweenLabel.setBackground(new Color(168, 252, 165));
+                    inBetweenLabel2.setBackground(new Color(168, 252, 165));
+                }
+                if(i == 3){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 1);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + 2);
+                    inBetweenLabel.setBackground(new Color(168, 252, 165));
+                    inBetweenLabel2.setBackground(new Color(168, 252, 165));
+                }
+
                 label.setBackground(new Color(141,249,137));
                 label.revalidate();
                 label.repaint();
@@ -482,6 +510,33 @@ public class BrickGame extends JFrame{
         public void mouseExited(MouseEvent e) {
             super.mouseExited(e);
             if(e.getSource() instanceof JLabel label){
+                int iLabel = labelList.indexOf(label);
+                int iEmptyLabel = labelList.indexOf(getEmptyLabel());
+                int i = iLabel-labelList.indexOf(getEmptyLabel());
+                if(i == - 12){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 4);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 8);
+                    inBetweenLabel.setBackground(Color.lightGray);
+                    inBetweenLabel2.setBackground(Color.lightGray);
+                }
+                if(i == 12){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 4);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + 8);
+                    inBetweenLabel.setBackground(Color.lightGray);
+                    inBetweenLabel2.setBackground(Color.lightGray);
+                }
+                if(i == - 3){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 1);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 2);
+                    inBetweenLabel.setBackground(Color.lightGray);
+                    inBetweenLabel2.setBackground(Color.lightGray);
+                }
+                if(i == 3){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 1);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + 2);
+                    inBetweenLabel.setBackground(Color.lightGray);
+                    inBetweenLabel2.setBackground(Color.lightGray);
+                }
                 label.setBackground(Color.LIGHT_GRAY);
                 label.revalidate();
                 label.repaint();
