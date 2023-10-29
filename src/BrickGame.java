@@ -35,6 +35,18 @@ public class BrickGame extends JFrame{
         Collections.shuffle(randomNumberList);
     }
 
+    // creates easy game
+    public void addToNumberListEasy(){
+        // number 1 to 14 is placed in order
+        for(int i = 1; i < 15; i++){
+            randomNumberList.add(String.valueOf(i));
+        }
+        // add empty
+        randomNumberList.add(" ");
+        // add number 15 in wrong order
+        randomNumberList.add("15");
+    }
+
     //Updated code to avoid repetition, and keep code short and easy to manage.
     public void addToLabelList(){
         for(int i = 0; i < 16; i++){
@@ -58,23 +70,24 @@ public class BrickGame extends JFrame{
     public void addMenue() {
         // chreate clicable menue item for NewGame
         JMenuItem newGame =new JMenuItem("New game");
-        newGame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-                reset(); // reset variables
-                run(); // call run method to start game again
-            }
+        newGame.addActionListener(actionEvent -> {
+            reset(); // reset variables
+            run(); // call run method to start game again
+        });
+        // chreate clicable menue item for NewGameEasy
+        JMenuItem newGameEasy =new JMenuItem("New game Easy");
+        newGameEasy.addActionListener(actionEvent -> {
+            reset(); // reset variables
+            runEasy(); // call run method to start game again
         });
         // chreate clicable menue item for Exit
         JMenuItem closeGame =new JMenuItem("Exit");
-        closeGame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-                System.exit(0);
-            }
-        });
+        closeGame.addActionListener(actionEvent -> System.exit(0));
 
         // create menu
         menu = new JMenu("Menu");
         menu.add(newGame);
+        menu.add(newGameEasy);
         menu.add(closeGame);
         // create menu-bar area
         JMenuBar menuBar = new JMenuBar();
@@ -121,6 +134,15 @@ public class BrickGame extends JFrame{
     public void run(){
         addMenue(); // Add Menu with listener
         addToNumberList(); //Add Numbers To List
+        addToLabelList(); //Add JLabels To List.
+        addComponents(); //Add All Components
+        addMouseListener(); //Add MouseListener
+    }
+
+    // Start an easy game
+    public void runEasy(){
+        addMenue(); // Add Menu with listener
+        addToNumberListEasy(); //Add Numbers To List
         addToLabelList(); //Add JLabels To List.
         addComponents(); //Add All Components
         addMouseListener(); //Add MouseListener
