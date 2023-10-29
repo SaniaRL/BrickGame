@@ -29,5 +29,5 @@ bin/
 .DS_Store
 
 ### Tillagt ###
-.idea
+.idea/
 BrickGame.iml
