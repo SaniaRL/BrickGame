@@ -104,12 +104,12 @@ public class BrickGame extends JFrame{
 
     // check if game is completed
     private boolean isGameCompleted() {
-        boolean completedGame = true; // startar metoden med att säga att spelet är rätt!
-        // loop som kontrollerar alla brickor (hoppar över sista tomma brickan)
+        boolean completedGame = true; // creates boolean variable 'completedGame' that says game is completed
+        // loop through all bricks (skips last empty brick)
         for (int i = 1; i < labelList.size(); i++) {
-            String siffraString = i + ""; // skapar en sträng som har värdet för första sifran i loopen (startar med siffran 1)
-            if (!siffraString.equals(labelList.get(i-1).getText())) { // get index startar från 0 och inte 1 (därför tar vi minus 1 hela tiden)
-                completedGame = false; // nu vet vi att en bricka inte är rätt placerat och då ändrar vi completdGame till false
+            String siffraString = i + ""; // creates string which hold value of the loop (starts with number 1)
+            if (!siffraString.equals(labelList.get(i-1).getText())) { // get index starts with 0 (because we subtract 1)
+                completedGame = false; // now we know one brick is not placed right, we set 'completedGame' to false
             }
         }
         return completedGame;
