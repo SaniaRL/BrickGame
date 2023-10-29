@@ -30,4 +30,5 @@ bin/
 
 ### Tillagt ###
 .idea/
+.out/
 BrickGame.iml
