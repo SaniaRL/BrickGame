@@ -9,6 +9,8 @@ public class ChangeColorScheme {
         switch (color){
             case "Pink" -> pinkColor();
             case "Yellow" -> yellowColor();
+            case "Blue" -> blueColor();
+            case "Green" -> greenColor();
             default -> defaultColor();
         }
     }
@@ -24,6 +26,16 @@ public class ChangeColorScheme {
         mouseListenerColor = new Color(255,102,165);
     }
     public void yellowColor() {
+        brickColor = new Color(241, 255, 163);
+        inBetweenColor = new Color(253, 255, 94);
+        mouseListenerColor = new Color(255, 247, 32);
+    }
+    public void blueColor() {
+        brickColor = new Color(161, 233, 255);
+        inBetweenColor = new Color(109, 207, 255);
+        mouseListenerColor = new Color(47, 181, 255);
+    }
+    public void greenColor() {
         brickColor = new Color(241, 255, 163);
         inBetweenColor = new Color(253, 255, 94);
         mouseListenerColor = new Color(255, 247, 32);
