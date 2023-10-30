@@ -442,7 +442,7 @@ public class BrickGame extends JFrame{
                 }
                 if(i == - 3){
                     JLabel inBetweenLabel = labelList.get(iEmptyLabel - 1);
-                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 1);
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 2);
                     changePosition(inBetweenLabel);
                     changePosition(inBetweenLabel2);
                     changePosition(labelClicked);
