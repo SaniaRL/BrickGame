@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 public class BrickGame extends JFrame{
     JMenu menu; // Create menu for our swing game
     ChangeColorScheme changeColorScheme;
@@ -183,12 +185,13 @@ public class BrickGame extends JFrame{
         int y = empty / sizeManager.getXY(); //y = 0, 1, 2, 3
         for(JLabel label : labelList){
             if (sizeManager.getX(labelList.indexOf(label)) == x || sizeManager.getY(labelList.indexOf(label)) == y ){
-                addMouseListener(neighbourMouseAdapter);
+                label.addMouseListener(neighbourMouseAdapter);
                 label.revalidate();
                 label.repaint();
             }
+            //TODO remove later
             else{
-                label.setBackground(Color.BLACK);
+                label.setBackground(Color.white);
             }
         }
     }
@@ -271,15 +274,17 @@ public class BrickGame extends JFrame{
         @Override
         public void mouseEntered(MouseEvent e) {
             super.mouseEntered(e);
-            if(e.getSource() instanceof JLabel label){
-                int indexLabel = labelList.indexOf(label);
-                int iEmptyLabel = labelList.indexOf(getEmptyLabel());
-                int allowedGap = indexLabel-labelList.indexOf(getEmptyLabel());
-                for (JLabel jLabel : labelList){
-                    int labelGap = labelList.indexOf(label)-labelList.indexOf(getEmptyLabel());
-                    if(indexLabel / sizeManager.getXY() == iEmptyLabel / sizeManager.getXY() &&
-                            labelGap <= allowedGap){
-                    jLabel.setBackground(changeColorScheme.getInBetweenColor());
+            if(e.getSource() instanceof JLabel eventLabel){
+                //Index of label
+                int emptyLabelPosition = labelList.indexOf(getEmptyLabel());
+                int eventLabelPosition = labelList.indexOf(eventLabel);
+                int allowedGap = abs(emptyLabelPosition - eventLabelPosition);
+                for (JLabel label : labelList){
+                    int labelPosition = labelList.indexOf(label);
+                    int labelGap = abs(emptyLabelPosition - labelPosition);
+                    if(labelGap <= allowedGap && (sizeManager.getX(labelPosition) == sizeManager.getX(emptyLabelPosition))
+                    || sizeManager.getY(labelPosition) == sizeManager.getY(emptyLabelPosition)){
+                    label.setBackground(Color.BLACK);
                 }
                 }
             }
