@@ -140,7 +140,7 @@ public class BrickGame extends JFrame{
     //To avoid warning that the variable in main is unused.
     public void run(){
         changeColorScheme = new ChangeColorScheme();
-        changeColorScheme.setColorScheme("Yellow"); //Change color to default
+        changeColorScheme.setColorScheme(""); //Change color to default
         addMenue(); // Add Menu with listener
         addToNumberList(); //Add Numbers To List
         addToLabelList(); //Add JLabels To List.
@@ -382,7 +382,7 @@ public class BrickGame extends JFrame{
                     inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
                 }
                 if(i == 2){
-                    inBetweenLabel = labelList.get(iEmptyLabel + 2);
+                    inBetweenLabel = labelList.get(iEmptyLabel + 1);
                     inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
                 }
                 label.setBackground(changeColorScheme.getMouseListenerColor());

@@ -1,15 +1,9 @@
-import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class ChangeColorScheme {
-    //Change Color of bricks
-    //Change Font
-
     private Color brickColor;
     private Color mouseListenerColor;
     private Color inBetweenColor;
-    List<JLabel> labelList;
 
     public void setColorScheme(String color){
         switch (color){
@@ -17,19 +11,6 @@ public class ChangeColorScheme {
             case "Yellow" -> yellowColor();
             default -> defaultColor();
         }
-
-    }
-
-    public Color getBrickColor() {
-        return brickColor;
-    }
-
-    public Color getMouseListenerColor() {
-        return mouseListenerColor;
-    }
-
-    public Color getInBetweenColor() {
-        return inBetweenColor;
     }
 
     public void defaultColor(){
@@ -47,4 +28,19 @@ public class ChangeColorScheme {
         inBetweenColor = new Color(253, 255, 94);
         mouseListenerColor = new Color(255, 247, 32);
     }
+
+    //region<Getters>
+    public Color getBrickColor() {
+        return brickColor;
+    }
+
+    public Color getMouseListenerColor() {
+        return mouseListenerColor;
+    }
+
+    public Color getInBetweenColor() {
+        return inBetweenColor;
+    }
+    //endregion
+
 }
