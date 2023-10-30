@@ -255,7 +255,7 @@ public class BrickGame extends JFrame{
     //endregion
 
     //region<MouseListener>
-
+//TODO Göra metoder så att koden i alla mouse listeners inte blir så lång
     MouseAdapter nextDoorNeighbourMouseAdapter = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -270,6 +270,8 @@ public class BrickGame extends JFrame{
                 addMouseListener();
                 repaint();
                 revalidate();
+
+                //TODO flytta detta till egen mouse adapter så att det bara står på ett ställe
                 if (isGameCompleted()) {
                     int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
                             "Congratulation", JOptionPane.OK_CANCEL_OPTION);
@@ -339,6 +341,8 @@ public class BrickGame extends JFrame{
                 addMouseListener();
                 repaint();
                 revalidate();
+
+                //TODO flytta detta till egen mouse adapter så att det bara står på ett ställe
                 if (isGameCompleted()) {
                     int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
                             "Congratulation", JOptionPane.OK_CANCEL_OPTION);
@@ -456,6 +460,8 @@ public class BrickGame extends JFrame{
                 addMouseListener();
                 repaint();
                 revalidate();
+
+                //TODO flytta detta till egen mouse adapter så att koden bara står på ett ställe
                 if (isGameCompleted()) {
                     int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
                             "Congratulation", JOptionPane.OK_CANCEL_OPTION);
