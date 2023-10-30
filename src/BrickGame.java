@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class BrickGame extends JFrame{
-    JMenu menu;
+    JMenu menu; // Create menu for our swing game
 
     //regions are to hide the code in the region - so it's easier to navigate
 
@@ -70,10 +70,13 @@ public class BrickGame extends JFrame{
     public void addMenue() {
         // chreate clicable menue item for NewGame
         JMenuItem newGame =new JMenuItem("New game");
-        newGame.addActionListener(actionEvent -> {
-            reset(); // reset variables
-            run(); // call run method to start game again
-        });
+        newGame.addActionListener( // create a lambda-method
+            actionEvent -> {  // actionEvent is method parameter
+                // here starts method implementation
+                reset(); // reset variables
+                run(); // call run method to start game again
+            } // end lamda-method
+        );
         // chreate clicable menue item for NewGameEasy
         JMenuItem newGameEasy =new JMenuItem("New game Easy");
         newGameEasy.addActionListener(actionEvent -> {
@@ -85,21 +88,23 @@ public class BrickGame extends JFrame{
         closeGame.addActionListener(actionEvent -> System.exit(0));
 
         // create menu
-        menu = new JMenu("Menu");
-        menu.add(newGame);
-        menu.add(newGameEasy);
-        menu.add(closeGame);
-        // create menu-bar area
+        menu = new JMenu("Menu"); // Sets label for our Menu
+        menu.add(newGame); // adds clicable items to our menu
+        menu.add(newGameEasy); // adds clicable items to our menu
+        menu.add(closeGame); // adds clicable items to our menu
+
+        // create menu-bar are
         JMenuBar menuBar = new JMenuBar();
-        menuBar.add(menu);
+        menuBar.add(menu); // adds menu to menuBar
+
         // adds menue-bar area to JFrame
         setJMenuBar(menuBar);
     }
 
     private void reset() {
-        labelList = new ArrayList<>();
-        randomNumberList = new ArrayList<>();
-        gamePanel.removeAll();
+        labelList = new ArrayList<>(); // all labels are empty now
+        randomNumberList = new ArrayList<>(); // number list is empty now
+        gamePanel.removeAll(); // removes gamePanel
     }
 
     // check if game is completed
@@ -142,7 +147,7 @@ public class BrickGame extends JFrame{
     // Start an easy game
     public void runEasy(){
         addMenue(); // Add Menu with listener
-        addToNumberListEasy(); //Add Numbers To List
+        addToNumberListEasy(); //Add Easy Numbers To List
         addToLabelList(); //Add JLabels To List.
         addComponents(); //Add All Components
         addMouseListener(); //Add MouseListener
@@ -274,9 +279,10 @@ public class BrickGame extends JFrame{
 
                 //TODO flytta detta till egen mouse adapter så att det bara står på ett ställe
                 if (isGameCompleted()) {
+                    // shows ConfirmDialog if game is completet
                     int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
                             "Congratulation", JOptionPane.OK_CANCEL_OPTION);
-                    if (result == JOptionPane.OK_OPTION) {
+                    if (result == JOptionPane.OK_OPTION) { // if user has chose to start new game
                         reset(); // reset variables
                         run(); // start new game
                     }
