@@ -60,12 +60,10 @@ public class BrickGame extends JFrame{
 
             label.setFont(new Font("Arial", Font.BOLD, 25)); //Font Choice. Not Important.
             label.setOpaque(true); //Make Opaque so Background will show.
-            label.setBorder(BorderFactory.createLineBorder(Color.BLACK)); //Create Border that matches BackgroundPane.
+            label.setBorder(BorderFactory.createLineBorder(changeColorScheme.getBackgroundColor())); //Create Border that matches BackgroundPane.
             if(label.getText().equals(" ")){
-                label.setBackground(Color.BLACK); //Make the "empty" JLabel black.
+                label.setBackground(changeColorScheme.getBackgroundColor()); //Make the "empty" JLabel black.
             }
-
-          //TODO  changeColorScheme.pinkColor(labelList);
         }
     }
 
@@ -131,7 +129,7 @@ public class BrickGame extends JFrame{
         setLocationRelativeTo(null);    //Make the Frame appear in the middle of the screen.
 
         gamePanel.setLayout(new GridLayout(4, 4));    //4 * 4 Layout for the 16 Labels.
-        gamePanel.setBackground(Color.BLACK); //Set Color. Color not important. Can be whatever.
+        gamePanel.setBackground(changeColorScheme.getBackgroundColor()); //Set Color. Color not important. Can be whatever.
         gamePanel.setOpaque(true);    //Make Opaque so Background can be seen.
     }
     //endregion
@@ -140,7 +138,7 @@ public class BrickGame extends JFrame{
     //To avoid warning that the variable in main is unused.
     public void run(){
         changeColorScheme = new ChangeColorScheme();
-        changeColorScheme.setColorScheme(""); //Change color to default
+        changeColorScheme.setColorScheme("Pink"); //Change color to default
         addMenue(); // Add Menu with listener
         addToNumberList(); //Add Numbers To List
         addToLabelList(); //Add JLabels To List.
@@ -252,7 +250,7 @@ public class BrickGame extends JFrame{
         String tempText = label.getText();
         emptyLabel.setText(tempText);
         emptyLabel.setBackground(changeColorScheme.getBrickColor());
-        label.setBackground(Color.BLACK);
+        label.setBackground(changeColorScheme.getBackgroundColor());
         label.setText(" ");
         repaint();
         revalidate();
