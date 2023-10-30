@@ -138,7 +138,7 @@ public class BrickGame extends JFrame{
     //Method to start Program instead of having the code in constructor.
     //To avoid warning that the variable in main is unused.
     public void run(){
-        sizeManager = new SizeManager(4);
+        sizeManager = new SizeManager(10);
         changeColorScheme = new ChangeColorScheme();
         changeColorScheme.setColorScheme("Pink"); //Change color to default
         addMenue(); // Add Menu with listener
@@ -181,71 +181,18 @@ public class BrickGame extends JFrame{
         int empty = labelList.indexOf(getEmptyLabel());
         int x = empty % sizeManager.getXY(); //x = 0, 1, 2, 3
         int y = empty / sizeManager.getXY(); //y = 0, 1, 2, 3
-        List<JLabel> nextDoorNeighbors = new ArrayList<>();
-        List<JLabel> closeNeighbors = new ArrayList<>();
-        List<JLabel> neighbors = new ArrayList<>();
-
-        if(x < sizeManager.getXY() -3){
-            neighbors.add(labelList.get(empty + 3));
-        }
-        if(x < sizeManager.getXY() - 2){
-            closeNeighbors.add(labelList.get(empty + 2));
-        }
-        if(x < sizeManager.getXY() - 1){
-            nextDoorNeighbors.add(labelList.get(empty + 1));
-        }
-
-
-        if(x != 0){
-            nextDoorNeighbors.add(labelList.get(empty - 1));
-        }
-        if(x > 1){
-            closeNeighbors.add(labelList.get(empty - 2));
-        }
-        if(x > 2){
-            neighbors.add(labelList.get(empty - 3));
-        }
-
-
-        if(y < sizeManager.getXY() - 1){
-            nextDoorNeighbors.add(labelList.get(empty + sizeManager.getXY()));
-        }
-        if(y < sizeManager.getXY() - 2){
-            closeNeighbors.add(labelList.get(empty + (sizeManager.getXY() * 2)));
-        }
-        if(y < sizeManager.getXY() - 3){
-            neighbors.add(labelList.get(empty + (sizeManager.getXY() * 3)));
-        }
-
-
-        if(y > 0){
-            nextDoorNeighbors.add(labelList.get(empty - sizeManager.getXY()));
-        }
-        if(y > 1){
-            closeNeighbors.add(labelList.get(empty - (sizeManager.getXY() * 2)));
-        }
-        if(y > 2){
-            neighbors.add(labelList.get(empty - (sizeManager.getXY() * 3)));
-        }
-
-        for(JLabel label : nextDoorNeighbors){
-            label.addMouseListener(nextDoorNeighbourMouseAdapter);
-            label.revalidate();
-            label.repaint();
-        }
-
-        for(JLabel label : closeNeighbors){
-            label.addMouseListener(closeNeighbourMouseAdapter);
-            label.revalidate();
-            label.repaint();
-        }
-
-        for(JLabel label : neighbors){
-            label.addMouseListener(neighbourMouseAdapter);
-            label.revalidate();
-            label.repaint();
+        for(JLabel label : labelList){
+            if (sizeManager.getX(labelList.indexOf(label)) == x || sizeManager.getY(labelList.indexOf(label)) == y ){
+                addMouseListener(neighbourMouseAdapter);
+                label.revalidate();
+                label.repaint();
+            }
+            else{
+                label.setBackground(Color.BLACK);
+            }
         }
     }
+
     //Method to change Position of the text and color of the JLabel with the text and color of the "empty" JLabel
     public void changePosition(JLabel label){
         JLabel emptyLabel = getEmptyLabel(); //Declare JLabel variable temp; Temporary reference that points to the "empty" JLabel
@@ -261,8 +208,6 @@ public class BrickGame extends JFrame{
     //Method to reset Mouse Listeners
     public void resetMouseListeners(){
         for(JLabel label : labelList){
-            label.removeMouseListener(nextDoorNeighbourMouseAdapter);
-            label.removeMouseListener(closeNeighbourMouseAdapter);
             label.removeMouseListener(neighbourMouseAdapter);
         }
     }
@@ -270,157 +215,6 @@ public class BrickGame extends JFrame{
     //endregion
 
     //region<MouseListener>
-    MouseAdapter nextDoorNeighbourMouseAdapter = new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
-            if(e.getSource() instanceof JLabel labelClicked){
-                resetMouseListeners();
-                changePosition(labelClicked);
-                addMouseListener();
-                repaint();
-                revalidate();
-
-                //TODO flytta detta till egen mouse adapter så att det bara står på ett ställe
-                if (isGameCompleted()) {
-                    // shows ConfirmDialog if game is completet
-                    int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
-                            "Congratulation", JOptionPane.OK_CANCEL_OPTION);
-                    if (result == JOptionPane.OK_OPTION) { // if user has chose to start new game
-                        reset(); // reset variables
-                        run(); // start new game
-                    }
-                }
-            }
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            super.mouseEntered(e);
-            if(e.getSource() instanceof JLabel label){
-                label.setBackground(changeColorScheme.getMouseListenerColor());
-                label.revalidate();
-                label.repaint();
-            }
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            super.mouseExited(e);
-            if(e.getSource() instanceof JLabel label){
-                label.setBackground(changeColorScheme.getBrickColor());
-                label.revalidate();
-                label.repaint();
-            }
-
-        }
-    };
-
-    MouseAdapter closeNeighbourMouseAdapter = new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            super.mouseClicked(e);
-            if(e.getSource() instanceof JLabel labelClicked){
-                resetMouseListeners();
-                int iLabelClicked = labelList.indexOf(labelClicked);
-                int iEmptyLabel = labelList.indexOf(getEmptyLabel());
-                int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
-                if(i == - (sizeManager.getXY() * 2)){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - sizeManager.getXY());
-                    changePosition(inBetweenLabel);
-                    changePosition(labelClicked);
-                }
-                if(i == sizeManager.getXY() * 2){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + sizeManager.getXY());
-                    changePosition(inBetweenLabel);
-                    changePosition(labelClicked);
-                }
-                if(i == - 2){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 1);
-                    changePosition(inBetweenLabel);
-                    changePosition(labelClicked);
-                }
-                if(i == 2){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 1);
-                    changePosition(inBetweenLabel);
-                    changePosition(labelClicked);
-                }
-                addMouseListener();
-                repaint();
-                revalidate();
-
-                //TODO flytta detta till egen mouse adapter så att det bara står på ett ställe
-                if (isGameCompleted()) {
-                    int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
-                            "Congratulation", JOptionPane.OK_CANCEL_OPTION);
-                    if (result == JOptionPane.OK_OPTION) {
-                        reset(); // reset variables
-                        run(); // start new game
-                    }
-                }
-            }
-        }
-
-        JLabel inBetweenLabel;
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            super.mouseEntered(e);
-            if(e.getSource() instanceof JLabel label){
-                int iLabelClicked = labelList.indexOf(label);
-                int iEmptyLabel = labelList.indexOf(getEmptyLabel());
-                int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
-                if(i == - (2 * sizeManager.getXY())){
-                    inBetweenLabel = labelList.get(iEmptyLabel - sizeManager.getXY());
-                    inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
-                }
-                if(i == 2 * sizeManager.getXY()){
-                    inBetweenLabel = labelList.get(iEmptyLabel + sizeManager.getXY());
-                    inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
-                }
-                if(i == - 2){
-                    inBetweenLabel = labelList.get(iEmptyLabel - 1);
-                    inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
-                }
-                if(i == 2){
-                    inBetweenLabel = labelList.get(iEmptyLabel + 1);
-                    inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
-                }
-                label.setBackground(changeColorScheme.getMouseListenerColor());
-                label.revalidate();
-                label.repaint();
-            }
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            super.mouseExited(e);
-            if(e.getSource() instanceof JLabel label){
-                int iLabelClicked = labelList.indexOf(label);
-                int iEmptyLabel = labelList.indexOf(getEmptyLabel());
-                int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
-                if(i == - (2 * sizeManager.getXY())){
-                    inBetweenLabel = labelList.get(iEmptyLabel - sizeManager.getXY());
-                    inBetweenLabel.setBackground(changeColorScheme.getBrickColor());
-                }
-                if(i == 2 * sizeManager.getXY()){
-                    inBetweenLabel = labelList.get(iEmptyLabel + sizeManager.getXY());
-                    inBetweenLabel.setBackground(changeColorScheme.getBrickColor());
-                }
-                if(i == - 2){
-                    inBetweenLabel = labelList.get(iEmptyLabel - 1);
-                    inBetweenLabel.setBackground(changeColorScheme.getBrickColor());
-                }
-                if(i == 2){
-                    inBetweenLabel = labelList.get(iEmptyLabel + 1);
-                    inBetweenLabel.setBackground(changeColorScheme.getBrickColor());
-                }
-                label.setBackground(changeColorScheme.getBrickColor());
-                label.revalidate();
-                label.repaint();
-            }
-
-        }
-    };
 
     MouseAdapter neighbourMouseAdapter = new MouseAdapter() {
         @Override
@@ -464,7 +258,6 @@ public class BrickGame extends JFrame{
                 repaint();
                 revalidate();
 
-                //TODO flytta detta till egen mouse adapter så att koden bara står på ett ställe
                 if (isGameCompleted()) {
                     int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
                             "Congratulation", JOptionPane.OK_CANCEL_OPTION);
@@ -474,43 +267,21 @@ public class BrickGame extends JFrame{
                     }
                 }
             }
-
         }
-
         @Override
         public void mouseEntered(MouseEvent e) {
             super.mouseEntered(e);
             if(e.getSource() instanceof JLabel label){
-                int iLabel = labelList.indexOf(label);
+                int indexLabel = labelList.indexOf(label);
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
-                int i = iLabel-labelList.indexOf(getEmptyLabel());
-                if(i == - (3 * sizeManager.getXY())){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - sizeManager.getXY());
-                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - (2 * sizeManager.getXY()));
-                    inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
-                    inBetweenLabel2.setBackground(changeColorScheme.getInBetweenColor());
+                int allowedGap = indexLabel-labelList.indexOf(getEmptyLabel());
+                for (JLabel jLabel : labelList){
+                    int labelGap = labelList.indexOf(label)-labelList.indexOf(getEmptyLabel());
+                    if(indexLabel / sizeManager.getXY() == iEmptyLabel / sizeManager.getXY() &&
+                            labelGap <= allowedGap){
+                    jLabel.setBackground(changeColorScheme.getInBetweenColor());
                 }
-                if(i == 3 * sizeManager.getXY()){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + sizeManager.getXY());
-                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + (2 * sizeManager.getXY()));
-                    inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
-                    inBetweenLabel2.setBackground(changeColorScheme.getInBetweenColor());
                 }
-                if(i == - 3){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 1);
-                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 2);
-                    inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
-                    inBetweenLabel2.setBackground(changeColorScheme.getInBetweenColor());
-                }
-                if(i == 3){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 1);
-                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + 2);
-                    inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
-                    inBetweenLabel2.setBackground(changeColorScheme.getInBetweenColor());
-                }
-                label.setBackground(changeColorScheme.getMouseListenerColor());
-                label.revalidate();
-                label.repaint();
             }
         }
 

@@ -12,4 +12,10 @@ public class SizeManager {
     public int getSize(){
         return xy * xy;
     }
+    public int getX(int i){
+        return i % getXY();
+    }
+    public int getY(int i){
+        return i / getXY();
+    }
 }
