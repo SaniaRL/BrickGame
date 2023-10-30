@@ -9,6 +9,7 @@ import java.util.List;
 public class BrickGame extends JFrame{
     JMenu menu; // Create menu for our swing game
     ChangeColorScheme changeColorScheme;
+    SizeManager sizeManager;
 
     //regions are to hide the code in the region - so it's easier to navigate
 
@@ -23,8 +24,8 @@ public class BrickGame extends JFrame{
 
     //Updated code to avoid repetition, and keep code short and easy to manage.
     public void addToNumberList(){
-        for(int i = 1; i < 17; i++){
-            if(i == 16){
+        for(int i = 1; i < sizeManager.getSize() + 1; i++){
+            if(i == sizeManager.getSize()){
                 randomNumberList.add(" ");
             }
             else{
@@ -48,7 +49,7 @@ public class BrickGame extends JFrame{
 
     //Updated code to avoid repetition, and keep code short and easy to manage.
     public void addToLabelList(){
-        for(int i = 0; i < 16; i++){
+        for(int i = 0; i < sizeManager.getSize(); i++){
             JLabel label = new JLabel();
             label.setText(randomNumberList.get(i));
             labelList.add(label);
@@ -122,13 +123,13 @@ public class BrickGame extends JFrame{
 
     public void addComponents(){
         setLayout(new BorderLayout());  //Set Layout
-        setSize(400,400);   //Set Size - Should not be Square when we add a Button.
+        setSize(600,600);   //Set Size - Should not be Square when we add a Button.
         setVisible(true);   //Make JFrame Visible.
         add(gamePanel, BorderLayout.CENTER);  //Background Panel is positioned Center. Button can be NORTH or SOUTH?
         setDefaultCloseOperation(EXIT_ON_CLOSE);    //Make the Close Button work.
         setLocationRelativeTo(null);    //Make the Frame appear in the middle of the screen.
 
-        gamePanel.setLayout(new GridLayout(4, 4));    //4 * 4 Layout for the 16 Labels.
+        gamePanel.setLayout(new GridLayout(sizeManager.getXY(), sizeManager.getXY()));    //4 * 4 Layout for the 16 Labels.
         gamePanel.setBackground(changeColorScheme.getBackgroundColor()); //Set Color. Color not important. Can be whatever.
         gamePanel.setOpaque(true);    //Make Opaque so Background can be seen.
     }
@@ -137,6 +138,7 @@ public class BrickGame extends JFrame{
     //Method to start Program instead of having the code in constructor.
     //To avoid warning that the variable in main is unused.
     public void run(){
+        sizeManager = new SizeManager(4);
         changeColorScheme = new ChangeColorScheme();
         changeColorScheme.setColorScheme("Pink"); //Change color to default
         addMenue(); // Add Menu with listener
@@ -177,19 +179,19 @@ public class BrickGame extends JFrame{
     //This code can be done in the Mouse Listener
     public void addMouseListener(){
         int empty = labelList.indexOf(getEmptyLabel());
-        int x = empty % 4; //x = 0, 1, 2, 3
-        int y = empty / 4; //y = 0, 1, 2, 3
+        int x = empty % sizeManager.getXY(); //x = 0, 1, 2, 3
+        int y = empty / sizeManager.getXY(); //y = 0, 1, 2, 3
         List<JLabel> nextDoorNeighbors = new ArrayList<>();
         List<JLabel> closeNeighbors = new ArrayList<>();
         List<JLabel> neighbors = new ArrayList<>();
 
-        if(x < 1){
+        if(x < sizeManager.getXY() -3){
             neighbors.add(labelList.get(empty + 3));
         }
-        if(x < 2){
+        if(x < sizeManager.getXY() - 2){
             closeNeighbors.add(labelList.get(empty + 2));
         }
-        if(x < 3){
+        if(x < sizeManager.getXY() - 1){
             nextDoorNeighbors.add(labelList.get(empty + 1));
         }
 
@@ -205,25 +207,25 @@ public class BrickGame extends JFrame{
         }
 
 
-        if(y < 3){
-            nextDoorNeighbors.add(labelList.get(empty + 4));
+        if(y < sizeManager.getXY() - 1){
+            nextDoorNeighbors.add(labelList.get(empty + sizeManager.getXY()));
         }
-        if(y < 2){
-            closeNeighbors.add(labelList.get(empty + 8));
+        if(y < sizeManager.getXY() - 2){
+            closeNeighbors.add(labelList.get(empty + (sizeManager.getXY() * 2)));
         }
-        if(y < 1){
-            neighbors.add(labelList.get(empty + 12));
+        if(y < sizeManager.getXY() - 3){
+            neighbors.add(labelList.get(empty + (sizeManager.getXY() * 3)));
         }
 
 
         if(y > 0){
-            nextDoorNeighbors.add(labelList.get(empty - 4));
+            nextDoorNeighbors.add(labelList.get(empty - sizeManager.getXY()));
         }
         if(y > 1){
-            closeNeighbors.add(labelList.get(empty - 8));
+            closeNeighbors.add(labelList.get(empty - (sizeManager.getXY() * 2)));
         }
         if(y > 2){
-            neighbors.add(labelList.get(empty - 12));
+            neighbors.add(labelList.get(empty - (sizeManager.getXY() * 3)));
         }
 
         for(JLabel label : nextDoorNeighbors){
@@ -323,13 +325,13 @@ public class BrickGame extends JFrame{
                 int iLabelClicked = labelList.indexOf(labelClicked);
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
                 int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
-                if(i == - 8){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 4);
+                if(i == - (sizeManager.getXY() * 2)){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - sizeManager.getXY());
                     changePosition(inBetweenLabel);
                     changePosition(labelClicked);
                 }
-                if(i == 8){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 4);
+                if(i == sizeManager.getXY() * 2){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + sizeManager.getXY());
                     changePosition(inBetweenLabel);
                     changePosition(labelClicked);
                 }
@@ -367,12 +369,12 @@ public class BrickGame extends JFrame{
                 int iLabelClicked = labelList.indexOf(label);
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
                 int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
-                if(i == - 8){
-                    inBetweenLabel = labelList.get(iEmptyLabel - 4);
+                if(i == - (2 * sizeManager.getXY())){
+                    inBetweenLabel = labelList.get(iEmptyLabel - sizeManager.getXY());
                     inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
                 }
-                if(i == 8){
-                    inBetweenLabel = labelList.get(iEmptyLabel + 4);
+                if(i == 2 * sizeManager.getXY()){
+                    inBetweenLabel = labelList.get(iEmptyLabel + sizeManager.getXY());
                     inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
                 }
                 if(i == - 2){
@@ -396,12 +398,12 @@ public class BrickGame extends JFrame{
                 int iLabelClicked = labelList.indexOf(label);
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
                 int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
-                if(i == - 8){
-                    inBetweenLabel = labelList.get(iEmptyLabel - 4);
+                if(i == - (2 * sizeManager.getXY())){
+                    inBetweenLabel = labelList.get(iEmptyLabel - sizeManager.getXY());
                     inBetweenLabel.setBackground(changeColorScheme.getBrickColor());
                 }
-                if(i == 8){
-                    inBetweenLabel = labelList.get(iEmptyLabel + 4);
+                if(i == 2 * sizeManager.getXY()){
+                    inBetweenLabel = labelList.get(iEmptyLabel + sizeManager.getXY());
                     inBetweenLabel.setBackground(changeColorScheme.getBrickColor());
                 }
                 if(i == - 2){
@@ -430,16 +432,16 @@ public class BrickGame extends JFrame{
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
                 int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
 
-                if(i == - 12){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 4);
-                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 8);
+                if(i == - (3 * sizeManager.getXY())){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - sizeManager.getXY());
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - (2 * sizeManager.getXY()));
                     changePosition(inBetweenLabel);
                     changePosition(inBetweenLabel2);
                     changePosition(labelClicked);
                 }
-                if(i == 12){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 4);
-                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + 8);
+                if(i == 3 * sizeManager.getXY()){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + sizeManager.getXY());
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + (2 * sizeManager.getXY()));
                     changePosition(inBetweenLabel);
                     changePosition(inBetweenLabel2);
                     changePosition(labelClicked);
@@ -482,15 +484,15 @@ public class BrickGame extends JFrame{
                 int iLabel = labelList.indexOf(label);
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
                 int i = iLabel-labelList.indexOf(getEmptyLabel());
-                if(i == - 12){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 4);
-                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 8);
+                if(i == - (3 * sizeManager.getXY())){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - sizeManager.getXY());
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - (2 * sizeManager.getXY()));
                     inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
                     inBetweenLabel2.setBackground(changeColorScheme.getInBetweenColor());
                 }
-                if(i == 12){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 4);
-                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + 8);
+                if(i == 3 * sizeManager.getXY()){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + sizeManager.getXY());
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + (2 * sizeManager.getXY()));
                     inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
                     inBetweenLabel2.setBackground(changeColorScheme.getInBetweenColor());
                 }
@@ -506,7 +508,6 @@ public class BrickGame extends JFrame{
                     inBetweenLabel.setBackground(changeColorScheme.getInBetweenColor());
                     inBetweenLabel2.setBackground(changeColorScheme.getInBetweenColor());
                 }
-
                 label.setBackground(changeColorScheme.getMouseListenerColor());
                 label.revalidate();
                 label.repaint();
@@ -520,15 +521,15 @@ public class BrickGame extends JFrame{
                 int iLabel = labelList.indexOf(label);
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
                 int i = iLabel-labelList.indexOf(getEmptyLabel());
-                if(i == - 12){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - 4);
-                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - 8);
+                if(i == - (3 * sizeManager.getXY())){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel - sizeManager.getXY());
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel - (2 * sizeManager.getXY()));
                     inBetweenLabel.setBackground(changeColorScheme.getBrickColor());
                     inBetweenLabel2.setBackground(changeColorScheme.getBrickColor());
                 }
-                if(i == 12){
-                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + 4);
-                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + 8);
+                if(i == 3 * sizeManager.getXY()){
+                    JLabel inBetweenLabel = labelList.get(iEmptyLabel + sizeManager.getXY());
+                    JLabel inBetweenLabel2 = labelList.get(iEmptyLabel + (2 * sizeManager.getXY()));
                     inBetweenLabel.setBackground(changeColorScheme.getBrickColor());
                     inBetweenLabel2.setBackground(changeColorScheme.getBrickColor());
                 }
