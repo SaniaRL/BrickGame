@@ -36,9 +36,9 @@ public class ChangeColorScheme {
         mouseListenerColor = new Color(47, 181, 255);
     }
     public void greenColor() {
-        brickColor = new Color(241, 255, 163);
-        inBetweenColor = new Color(253, 255, 94);
-        mouseListenerColor = new Color(255, 247, 32);
+        brickColor = new Color(193, 245, 197);
+        inBetweenColor = new Color(125, 245, 84);
+        mouseListenerColor = new Color(95, 187, 64);
     }
 
     //region<Getters>
