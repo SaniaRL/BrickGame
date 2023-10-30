@@ -1,6 +1,4 @@
-import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class ChangeColorScheme {
     //Change Color of bricks
@@ -9,7 +7,6 @@ public class ChangeColorScheme {
     private Color brickColor;
     private Color mouseListenerColor;
     private Color inBetweenColor;
-    List<JLabel> labelList;
 
     public void setColorScheme(String color){
         switch (color){
