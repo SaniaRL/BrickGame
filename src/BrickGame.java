@@ -236,9 +236,6 @@ public class BrickGame extends JFrame{
             label.revalidate();
             label.repaint();
         }
-
-
-
     }
     //Method to change Position of the text and color of the JLabel with the text and color of the "empty" JLabel
     public void changePosition(JLabel label){
@@ -251,6 +248,14 @@ public class BrickGame extends JFrame{
         repaint();
         revalidate();
     }
+    //Method to reset Mouse Listeners
+    public void resetMouseListeners(){
+        for(JLabel label : labelList){
+            label.removeMouseListener(nextDoorNeighbourMouseAdapter);
+            label.removeMouseListener(closeNeighbourMouseAdapter);
+            label.removeMouseListener(neighbourMouseAdapter);
+        }
+    }
 
     //endregion
 
@@ -261,11 +266,7 @@ public class BrickGame extends JFrame{
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             if(e.getSource() instanceof JLabel labelClicked){
-                for(JLabel label : labelList){
-                    label.removeMouseListener(nextDoorNeighbourMouseAdapter);
-                    label.removeMouseListener(closeNeighbourMouseAdapter);
-                    label.removeMouseListener(neighbourMouseAdapter);
-                }
+                resetMouseListeners();
                 changePosition(labelClicked);
                 addMouseListener();
                 repaint();
@@ -310,11 +311,7 @@ public class BrickGame extends JFrame{
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             if(e.getSource() instanceof JLabel labelClicked){
-                for(JLabel label : labelList){
-                    label.removeMouseListener(nextDoorNeighbourMouseAdapter);
-                    label.removeMouseListener(closeNeighbourMouseAdapter);
-                    label.removeMouseListener(neighbourMouseAdapter);
-                }
+                resetMouseListeners();
                 int iLabelClicked = labelList.indexOf(labelClicked);
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
                 int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
@@ -420,11 +417,7 @@ public class BrickGame extends JFrame{
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             if(e.getSource() instanceof JLabel labelClicked){
-                for(JLabel label : labelList){
-                    label.removeMouseListener(nextDoorNeighbourMouseAdapter);
-                    label.removeMouseListener(closeNeighbourMouseAdapter);
-                    label.removeMouseListener(neighbourMouseAdapter);
-                }
+                resetMouseListeners();
                 int iLabelClicked = labelList.indexOf(labelClicked);
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
                 int i = iLabelClicked-labelList.indexOf(getEmptyLabel());
