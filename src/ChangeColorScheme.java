@@ -1,9 +1,6 @@
 import java.awt.*;
 
 public class ChangeColorScheme {
-    //Change Color of bricks
-    //Change Font
-
     private Color brickColor;
     private Color mouseListenerColor;
     private Color inBetweenColor;
@@ -12,21 +9,10 @@ public class ChangeColorScheme {
         switch (color){
             case "Pink" -> pinkColor();
             case "Yellow" -> yellowColor();
+            case "Blue" -> blueColor();
+            case "Green" -> greenColor();
             default -> defaultColor();
         }
-
-    }
-
-    public Color getBrickColor() {
-        return brickColor;
-    }
-
-    public Color getMouseListenerColor() {
-        return mouseListenerColor;
-    }
-
-    public Color getInBetweenColor() {
-        return inBetweenColor;
     }
 
     public void defaultColor(){
@@ -44,4 +30,29 @@ public class ChangeColorScheme {
         inBetweenColor = new Color(253, 255, 94);
         mouseListenerColor = new Color(255, 247, 32);
     }
+    public void blueColor() {
+        brickColor = new Color(161, 233, 255);
+        inBetweenColor = new Color(109, 207, 255);
+        mouseListenerColor = new Color(47, 181, 255);
+    }
+    public void greenColor() {
+        brickColor = new Color(193, 245, 197);
+        inBetweenColor = new Color(125, 245, 84);
+        mouseListenerColor = new Color(95, 187, 64);
+    }
+
+    //region<Getters>
+    public Color getBrickColor() {
+        return brickColor;
+    }
+
+    public Color getMouseListenerColor() {
+        return mouseListenerColor;
+    }
+
+    public Color getInBetweenColor() {
+        return inBetweenColor;
+    }
+    //endregion
+
 }
