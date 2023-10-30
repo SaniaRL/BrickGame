@@ -212,7 +212,6 @@ public class BrickGame extends JFrame{
     }
 
     //endregion
-
     //region<MouseListener>
 
     MouseAdapter brickMouseAdapter = new MouseAdapter() {
@@ -231,15 +230,17 @@ public class BrickGame extends JFrame{
                 int xDistance = abs(xEmptyLabel - xLabel);
 //                int yDistance = abs(yEmptyLabel - yLabel);
 
-            //    0, 1, 2, 3, 4
-                if(xLabel == xEmptyLabel){
-                    for(int i = 1; i <= abs(sizeManager.getXY() - (iEmptyLabel - 1)); i++){
-                        changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) + sizeManager.getXY()));
+            //  3 7 11 11 7 3
+                if(xLabel == xEmptyLabel && labelList.indexOf(getEmptyLabel()) > iLabelClicked){
+                    for(int i = 1; i <= abs(((labelList.indexOf(getEmptyLabel()) - iLabelClicked)) /
+                    sizeManager.getXY()); i++){
+                        changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) - sizeManager.getXY()));
                     }
                 }
-                if(xLabel == xEmptyLabel && yLabel < yEmptyLabel){
-                    for(int i = 1; i <= xDistance; i++){
-                        changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) - sizeManager.getXY()));
+                if(xLabel == xEmptyLabel && labelList.indexOf(getEmptyLabel()) < iLabelClicked){
+                    for(int i = 1; i <= abs(((labelList.indexOf(getEmptyLabel()) + iLabelClicked)) /
+                            sizeManager.getXY()); i++){
+                        changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) + sizeManager.getXY()));
                     }
                 }
                 addMouseListener();
@@ -260,7 +261,6 @@ public class BrickGame extends JFrame{
         public void mouseEntered(MouseEvent e) {
             super.mouseEntered(e);
             if(e.getSource() instanceof JLabel eventLabel){
-                //Index of label
                 int emptyLabelPosition = labelList.indexOf(getEmptyLabel());
                 int eventLabelPosition = labelList.indexOf(eventLabel);
                 int eventLabelX = sizeManager.getX(eventLabelPosition);
@@ -270,7 +270,6 @@ public class BrickGame extends JFrame{
                 int allowedGap = abs(emptyLabelPosition - eventLabelPosition);
                 for (JLabel label : labelList){
                     int labelGap = abs(emptyLabelPosition - labelList.indexOf(label));
-//                    int xGap = abs(eventLabelX - emptyLabelX);
                     int labelPosition = labelList.indexOf(label);
                     int labelX = sizeManager.getX(labelPosition);
                     int labelY = sizeManager.getY(labelPosition);
@@ -286,11 +285,10 @@ public class BrickGame extends JFrame{
                 }
             }
         }
-
         @Override
         public void mouseExited(MouseEvent e) {
             super.mouseExited(e);
-
+            //It seems that mouseExited is excavated before mouseEntered, so this is a simple solution.
             if(e.getSource() instanceof JLabel){
                 for(JLabel label : labelList){
                     if(label == getEmptyLabel()){
@@ -303,8 +301,5 @@ public class BrickGame extends JFrame{
             }
         }
     };
-
-
     //endregion
-
 }
