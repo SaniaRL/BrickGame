@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -400,7 +398,7 @@ public class BrickGame extends JFrame{
                     inBetweenLabel.setBackground(Color.lightGray);
                 }
                 if(i == 2){
-                    inBetweenLabel = labelList.get(iEmptyLabel + 2);
+                    inBetweenLabel = labelList.get(iEmptyLabel + 1);
                     inBetweenLabel.setBackground(Color.lightGray);
                 }
                 label.setBackground(Color.LIGHT_GRAY);
