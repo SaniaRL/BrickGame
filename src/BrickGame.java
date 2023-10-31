@@ -373,7 +373,9 @@ public class BrickGame extends JFrame{
                                 label.setBackground(changeColorScheme.getInBetweenColor());
                             }
                         }
-                    eventLabel.setBackground(changeColorScheme.getMouseListenerColor());
+                        if(eventLabel != getEmptyLabel()){
+                            eventLabel.setBackground(changeColorScheme.getMouseListenerColor());
+                        }
                 }
             }
         }
