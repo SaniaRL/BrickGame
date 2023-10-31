@@ -9,7 +9,8 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class BrickGame extends JFrame{
-    JMenu menu; // Create menu for our swing game
+    JMenu mainMenu; // Create menu for our swing game
+    JMenu colorMenu; // Create menu for our swing game
     ChangeColorScheme changeColorScheme;
     SizeManager sizeManager;
 
@@ -73,6 +74,76 @@ public class BrickGame extends JFrame{
     }
 
     public void addMenue() {
+        // create clickable menu item for change color Pink
+        JMenuItem pink =new JMenuItem("Pink");
+        pink.addActionListener( // create a lambda-method
+                actionEvent -> {  // actionEvent is method parameter
+                    // here starts method implementation
+                    changeColorScheme.setColorScheme("Pink");
+                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); //Set Color background color
+                    for(JLabel label : labelList){
+                        if(label == getEmptyLabel()){
+                            label.setBackground(changeColorScheme.getBackgroundColor());
+                        }
+                        else{
+                            label.setBackground(changeColorScheme.getBrickColor());
+                        }
+                    }
+                } // end lambda-method
+        );
+        // create clickable menu item for change color yellow
+        JMenuItem yellow =new JMenuItem("Yellow");
+        yellow.addActionListener( // create a lambda-method
+                actionEvent -> {  // actionEvent is method parameter
+                    // here starts method implementation
+                    changeColorScheme.setColorScheme("Yellow");
+                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); //Set Color background color
+                    for(JLabel label : labelList){
+                        if(label == getEmptyLabel()){
+                            label.setBackground(changeColorScheme.getBackgroundColor());
+                        }
+                        else{
+                            label.setBackground(changeColorScheme.getBrickColor());
+                        }
+                    }
+                } // end lambda-method
+        );
+        // create clickable menu item for change color Blue
+        JMenuItem blue =new JMenuItem("Blue");
+        blue.addActionListener( // create a lambda-method
+                actionEvent -> {  // actionEvent is method parameter
+                    // here starts method implementation
+                    changeColorScheme.setColorScheme("Blue");
+                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); //Set Color background color
+                    for(JLabel label : labelList){
+                        if(label == getEmptyLabel()){
+                            label.setBackground(changeColorScheme.getBackgroundColor());
+                        }
+                        else{
+                            label.setBackground(changeColorScheme.getBrickColor());
+                        }
+                    }
+                } // end lambda-method
+        );
+        // create clickable menu item for change color Green
+        JMenuItem green =new JMenuItem("Green");
+        green.addActionListener( // create a lambda-method
+                actionEvent -> {  // actionEvent is method parameter
+                    // here starts method implementation
+                    changeColorScheme.setColorScheme("Green");
+                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); //Set Color background color
+                    for(JLabel label : labelList){
+                        if(label == getEmptyLabel()){
+                            label.setBackground(changeColorScheme.getBackgroundColor());
+                        }
+                        else{
+                            label.setBackground(changeColorScheme.getBrickColor());
+                        }
+                    }
+                } // end lambda-method
+        );
+
+
         // create clickable menu item for NewGame
         JMenuItem newGame =new JMenuItem("New game");
         newGame.addActionListener( // create a lambda-method
@@ -93,14 +164,21 @@ public class BrickGame extends JFrame{
         closeGame.addActionListener(actionEvent -> System.exit(0));
 
         // create menu
-        menu = new JMenu("Menu"); // Sets label for our Menu
-        menu.add(newGame); // adds clickable items to our menu
-        menu.add(newGameEasy); // adds clickable items to our menu
-        menu.add(closeGame); // adds clickable items to our menu
+        mainMenu = new JMenu("Menu"); // Sets label for our Menu
+        mainMenu.add(newGame); // adds clickable items to our menu
+        mainMenu.add(newGameEasy); // adds clickable items to our menu
+        mainMenu.add(closeGame); // adds clickable items to our menu
+
+        colorMenu = new JMenu("Color"); // Sets label for our Men
+        colorMenu.add(pink);
+        colorMenu.add(yellow);
+        colorMenu.add(blue);
+        colorMenu.add(green);
 
         // create menu-bar are
         JMenuBar menuBar = new JMenuBar();
-        menuBar.add(menu); // adds menu to menuBar
+        menuBar.add(mainMenu); // adds main-menu to menuBar
+        menuBar.add(colorMenu); // adds color-menu to menuBar
 
         // adds menu-bar area to JFrame
         setJMenuBar(menuBar);
