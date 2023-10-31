@@ -185,6 +185,23 @@ public class BrickGame extends JFrame{
         mainMenu.add(closeGame); // lägger till Exit-menyItem i menyn
 
         //skapar olika storlekar för sizemenu
+        JMenuItem threeX3 = new JMenuItem("3 x 3");
+        JMenuItem fourX4 = new JMenuItem("4 x 4");
+        JMenuItem fiveX5 = new JMenuItem("5 x 5");
+        JMenuItem eightX8  = new JMenuItem("8 x 8");
+        JMenuItem tenX10 = new JMenuItem("10 x 10");
+        sizeMenu.add(threeX3);
+        sizeMenu.add(fourX4);
+        sizeMenu.add(fiveX5);
+        sizeMenu.add(eightX8);
+        sizeMenu.add(tenX10);
+
+        //add actionListeneres to sizeMenu MenuItems
+        threeX3.addActionListener(ActiveEvent -> {reset(); run(3);});
+        fourX4.addActionListener(ActiveEvent -> {reset(); run(4);});
+        fiveX5.addActionListener(ActiveEvent -> {reset(); run(5);});
+        eightX8.addActionListener(ActiveEvent -> {reset(); run(8);});
+        tenX10.addActionListener(ActiveEvent -> {reset(); run(10);});
 
         // skapar meny variabel i Swing
         colorMenu = new JMenu("Color"); // sätter label-texten till Color för menyn
@@ -240,6 +257,16 @@ public class BrickGame extends JFrame{
     //To avoid warning that the variable in main is unused.
     public void run(){
         sizeManager = new SizeManager(4);
+        changeColorScheme = new ChangeColorScheme();
+        changeColorScheme.setColorScheme(""); //Change color to default
+        addMenue(); // Add Menu with listener
+        addToNumberList(); //Add Numbers To List
+        addToLabelList(); //Add JLabels To List.
+        addComponents(); //Add All Components
+        addMouseListener(); //Add MouseListener
+    }
+    public void run(int size){
+        sizeManager = new SizeManager(size);
         changeColorScheme = new ChangeColorScheme();
         changeColorScheme.setColorScheme(""); //Change color to default
         addMenue(); // Add Menu with listener
@@ -312,7 +339,6 @@ public class BrickGame extends JFrame{
 
     //endregion
     //region<MouseListener>
-
     MouseAdapter brickMouseAdapter = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
