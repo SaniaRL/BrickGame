@@ -230,30 +230,45 @@ public class BrickGame extends JFrame{
                 int xDistance = abs(xEmptyLabel - xLabel);
 //                int yDistance = abs(yEmptyLabel - yLabel);
 
-            //  3 7 11 11 7 3
-                if(xLabel == xEmptyLabel && labelList.indexOf(getEmptyLabel()) > iLabelClicked){
-                    for(int i = 1; i <= abs(((labelList.indexOf(getEmptyLabel()) - iLabelClicked)) /
-                    sizeManager.getXY()); i++){
+                int xLoop = abs(((labelList.indexOf(getEmptyLabel()) - iLabelClicked)) / sizeManager.getXY());
+                int yLoopRight = abs(iEmptyLabel - iLabelClicked);
+                //  3 7 11 11 7 3
+                //THIS CODE SEEM TO WORK  -  SOON
+                //Up - works the best of them
+                if(xLabel == xEmptyLabel && iEmptyLabel > iLabelClicked){
+                    for(int i = 0; i < xLoop; i++){
                         changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) - sizeManager.getXY()));
                     }
                 }
-                if(xLabel == xEmptyLabel && labelList.indexOf(getEmptyLabel()) < iLabelClicked){
-                    for(int i = 1; i <= abs(((labelList.indexOf(getEmptyLabel()) + iLabelClicked)) /
-                            sizeManager.getXY()); i++){
+                //Down - is messing with me
+                if(xLabel == xEmptyLabel && iEmptyLabel < iLabelClicked){
+                    for(int i = 0; i < xLoop; i++){
                         changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) + sizeManager.getXY()));
                     }
                 }
+                if(yLabel == yEmptyLabel && iEmptyLabel > iLabelClicked){
+                    for(int i = 0; i < yLoopRight; i++){
+                        changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) + 1));
+                    }
+                }
+                if(yLabel == yEmptyLabel && iEmptyLabel < iLabelClicked){
+                    for(int i = 0; i < xLoop; i++){
+                        changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) - 1));
+                    }
+                }
+
+
                 addMouseListener();
                 repaint();
                 revalidate();
 
-                if (isGameCompleted()) {
-                    int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
-                            "Congratulation", JOptionPane.OK_CANCEL_OPTION);
-                    if (result == JOptionPane.OK_OPTION) {
-                        reset(); // reset variables
-                        run(); // start new game
-                    }
+            }
+            if (isGameCompleted()) {
+                int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
+                        "Congratulation", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    reset(); // reset variables
+                    run(); // start new game
                 }
             }
         }
