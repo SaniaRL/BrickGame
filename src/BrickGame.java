@@ -140,7 +140,7 @@ public class BrickGame extends JFrame{
     //Method to start Program instead of having the code in constructor.
     //To avoid warning that the variable in main is unused.
     public void run(){
-        sizeManager = new SizeManager(10);
+        sizeManager = new SizeManager(20);
         changeColorScheme = new ChangeColorScheme();
         changeColorScheme.setColorScheme("Pink"); //Change color to default
         addMenue(); // Add Menu with listener
@@ -231,7 +231,7 @@ public class BrickGame extends JFrame{
 //                int yDistance = abs(yEmptyLabel - yLabel);
 
                 int xLoop = abs(((labelList.indexOf(getEmptyLabel()) - iLabelClicked)) / sizeManager.getXY());
-                int yLoopRight = abs(iEmptyLabel - iLabelClicked);
+                int yLoop = abs(iEmptyLabel - iLabelClicked);
                 //  3 7 11 11 7 3
                 //THIS CODE SEEM TO WORK  -  SOON
                 //Up - works the best of them
@@ -246,14 +246,16 @@ public class BrickGame extends JFrame{
                         changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) + sizeManager.getXY()));
                     }
                 }
+                //Right - THIS ONE WORKS BUT WHY?
                 if(yLabel == yEmptyLabel && iEmptyLabel > iLabelClicked){
-                    for(int i = 0; i < yLoopRight; i++){
-                        changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) + 1));
+                    for(int i = 0; i < yLoop; i++){
+                        changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) - 1));
                     }
                 }
+                //Left - works a bit
                 if(yLabel == yEmptyLabel && iEmptyLabel < iLabelClicked){
-                    for(int i = 0; i < xLoop; i++){
-                        changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) - 1));
+                    for(int i = 0; i < yLoop; i++){
+                        changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) + 1));
                     }
                 }
 
