@@ -38,15 +38,17 @@ public class BrickGame extends JFrame{
     }
 
     // creates easy game
+    //TODO remove changes
     public void addToNumberListEasy(){
         // number 1 to 14 is placed in order
-        for(int i = 1; i < 15; i++){
+        for(int i = 1; i < sizeManager.getSize() - 1; i++){
             randomNumberList.add(String.valueOf(i));
         }
         // add empty
         randomNumberList.add(" ");
         // add number 15 in wrong order
-        randomNumberList.add("15");
+        //TODO ta in värdet så det kan vara olika
+        randomNumberList.add(String.valueOf(sizeManager.getSize() - 1));
     }
 
     //Updated code to avoid repetition, and keep code short and easy to manage.
@@ -140,9 +142,9 @@ public class BrickGame extends JFrame{
     //Method to start Program instead of having the code in constructor.
     //To avoid warning that the variable in main is unused.
     public void run(){
-        sizeManager = new SizeManager(20);
+        sizeManager = new SizeManager(4);
         changeColorScheme = new ChangeColorScheme();
-        changeColorScheme.setColorScheme("Pink"); //Change color to default
+        changeColorScheme.setColorScheme(""); //Change color to default
         addMenue(); // Add Menu with listener
         addToNumberList(); //Add Numbers To List
         addToLabelList(); //Add JLabels To List.
@@ -222,18 +224,15 @@ public class BrickGame extends JFrame{
                 resetMouseListeners();
                 int iLabelClicked = labelList.indexOf(labelClicked);
                 int iEmptyLabel = labelList.indexOf(getEmptyLabel());
-                //int i = iLabelClicked-iEmptyLabel;
                 int xLabel = sizeManager.getX(iLabelClicked);
                 int yLabel = sizeManager.getY(iLabelClicked);
                 int xEmptyLabel = sizeManager.getX(iEmptyLabel);
                 int yEmptyLabel = sizeManager.getY(iEmptyLabel);
-                int xDistance = abs(xEmptyLabel - xLabel);
-//                int yDistance = abs(yEmptyLabel - yLabel);
 
                 int xLoop = abs(((labelList.indexOf(getEmptyLabel()) - iLabelClicked)) / sizeManager.getXY());
                 int yLoop = abs(iEmptyLabel - iLabelClicked);
                 //  3 7 11 11 7 3
-                //THIS CODE SEEM TO WORK  -  SOON
+                //THIS CODE SEEMS TO WORK  -  SOON
                 //Up - works the best of them
                 if(xLabel == xEmptyLabel && iEmptyLabel > iLabelClicked){
                     for(int i = 0; i < xLoop; i++){
@@ -259,11 +258,9 @@ public class BrickGame extends JFrame{
                     }
                 }
 
-
                 addMouseListener();
                 repaint();
                 revalidate();
-
             }
             if (isGameCompleted()) {
                 int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
