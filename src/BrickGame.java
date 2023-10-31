@@ -10,6 +10,7 @@ import static java.lang.Math.abs;
 
 public class BrickGame extends JFrame{
     JMenu mainMenu; // skapar variabel för huvudmeny i Swing
+    JMenu sizeMenu;
     JMenu colorMenu; // skapar variabel för färgmeny i Swing
     ChangeColorScheme changeColorScheme;
     SizeManager sizeManager;
@@ -177,9 +178,13 @@ public class BrickGame extends JFrame{
 
         // skapar meny variabel i Swing
         mainMenu = new JMenu("Menu"); // sätter label-texten till Menu för menyn
+        sizeMenu = new JMenu("Size");
         mainMenu.add(newGame); // lägger till NewGame-menyItem i menyn
         mainMenu.add(newGameEasy); // lägger till NewGameEasy-menyItem i menyn
+        mainMenu.add(sizeMenu);
         mainMenu.add(closeGame); // lägger till Exit-menyItem i menyn
+
+        //skapar olika storlekar för sizemenu
 
         // skapar meny variabel i Swing
         colorMenu = new JMenu("Color"); // sätter label-texten till Color för menyn
