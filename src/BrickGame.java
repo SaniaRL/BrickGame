@@ -73,14 +73,14 @@ public class BrickGame extends JFrame{
         }
     }
 
-    public void addMenue() {
+    public void addMenu() {
         // skapar klickbar menu-item(meny-val) för Pink/rosa
         JMenuItem pink =new JMenuItem("Pink");
         pink.addActionListener( // en ActionListener metod som tar en lambdas
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
                     // här är lambdas metodens implementation
-                    changeColorScheme.setColorScheme("Pink"); // anger färschemat Pink/rosa
-                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bagrundsfärgen för panelen i Swing
+                    changeColorScheme.setColorScheme("Pink"); // anger färgschemat Pink/rosa
+                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bakgrundsfärgen för panelen i Swing
                     for(JLabel label : labelList){ // loopar igenom alla labels som vi har
                         if(label == getEmptyLabel()){
                             label.setBackground(changeColorScheme.getBackgroundColor()); // tom bricka får bakgrundsfärgen
@@ -90,15 +90,15 @@ public class BrickGame extends JFrame{
                         }
                     }
                 } // här slutar lambdas metoden
-        ); // här är slutparantes för actionlistener metoden som tog en lambdas
+        ); // här är slutparentes för actionListener metoden som tog en lambdas
 
         // skapar klickbar menu-item(meny-val) för yellow/gul
         JMenuItem yellow =new JMenuItem("Yellow");
         yellow.addActionListener( // en ActionListener metod som tar en lambdas
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
                     // här är lambdas metodens implementation
-                    changeColorScheme.setColorScheme("Yellow"); // anger färschemat yellow/gul
-                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bagrundsfärgen för panelen i Swing
+                    changeColorScheme.setColorScheme("Yellow"); // anger färgschemat yellow/gul
+                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bakgrundsfärgen för panelen i Swing
                     for(JLabel label : labelList){ // loopar igenom alla labels som vi har
                         if(label == getEmptyLabel()){
                             label.setBackground(changeColorScheme.getBackgroundColor()); // tom bricka får bakgrundsfärgen
@@ -108,15 +108,15 @@ public class BrickGame extends JFrame{
                         }
                     }
                 } // här slutar lambdas metoden
-        ); // här är slutparantes för actionlistener metoden som tog en lambdas
+        ); // här är slutparentes för actionListener metoden som tog en lambdas
 
         // skapar klickbar menu-item(meny-val) för blue/blå
         JMenuItem blue =new JMenuItem("Blue");
         blue.addActionListener( // en ActionListener metod som tar en lambdas
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
                     // här är lambdas metodens implementation
-                    changeColorScheme.setColorScheme("Blue"); // anger färschemat blue/blå
-                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bagrundsfärgen för panelen i Swing
+                    changeColorScheme.setColorScheme("Blue"); // anger färgschemat blue/blå
+                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bakgrundsfärgen för panelen i Swing
                     for(JLabel label : labelList){ // loopar igenom alla labels som vi har
                         if(label == getEmptyLabel()){
                             label.setBackground(changeColorScheme.getBackgroundColor()); // tom bricka får bakgrundsfärgen
@@ -126,15 +126,15 @@ public class BrickGame extends JFrame{
                         }
                     }
                 } // här slutar lambdas metoden
-        ); // här är slutparantes för actionlistener metoden som tog en lambdas
+        ); // här är slutparentes för actionListener metoden som tog en lambdas
 
         // skapar klickbar menu-item(meny-val) för green/grön
         JMenuItem green =new JMenuItem("Green");
         green.addActionListener( // en ActionListener metod som tar en lambdas
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
                     // här är lambdas metodens implementation
-                    changeColorScheme.setColorScheme("Green"); // anger färschemat green/grön
-                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bagrundsfärgen för panelen i Swing
+                    changeColorScheme.setColorScheme("Green"); // anger färgschemat green/grön
+                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bakgrundsfärgen för panelen i Swing
                     for(JLabel label : labelList){ // loopar igenom alla labels som vi har
                         if(label == getEmptyLabel()){
                             label.setBackground(changeColorScheme.getBackgroundColor()); // tom bricka får bakgrundsfärgen
@@ -144,7 +144,7 @@ public class BrickGame extends JFrame{
                         }
                     }
                 } // här slutar lambdas metoden
-        ); // här är slutparantes för actionlistener metoden som tog en lambdas
+        ); // här är slutparentes för actionListener metoden som tog en lambdas
 
 
         // skapar klickbar menu-item(meny-val) för NewGame
@@ -155,7 +155,7 @@ public class BrickGame extends JFrame{
                     reset(); // reset(raderar värdet) alla variabler
                     run(); // anropar run metoden för att starta nytt brick spel igen
             } // här slutar lambdas metoden
-        ); // här är slutparantes för actionlistener metoden som tog en lambdas
+        ); // här är slutparentes för actionListener metoden som tog en lambdas
 
         // skapar klickbar menu-item(meny-val) för NewGame Easy
         JMenuItem newGameEasy =new JMenuItem("New game Easy");
@@ -165,14 +165,14 @@ public class BrickGame extends JFrame{
                     reset(); // reset(raderar värdet) alla variabler
                     runEasy(); // anropar run-easy metoden för att starta nytt brick spel igen
                 } // här slutar lambdas metoden
-        ); // här är slutparantes för actionlistener metoden som tog en lambdas
+        ); // här är slutparentes för actionListener metoden som tog en lambdas
 
         // skapar klickbar menu-item(meny-val) för Exit
         JMenuItem closeGame =new JMenuItem("Exit");
         closeGame.addActionListener( // en ActionListener metod som tar en lambdas
                 actionEvent -> // lambdas metoden börjar här och tar en actionEvent parameter
                         System.exit(0) // här är lambdas metodens implementation, stänger ner Java programmet
-        ); // här är slutparantes för actionlistener metoden som tog en lambdas
+        ); // här är slutparentes för actionListener metoden som tog en lambdas
 
         // skapar meny variabel i Swing
         colorMenu = new JMenu("Color"); // sätter label-texten till Color för menyn
@@ -222,7 +222,7 @@ public class BrickGame extends JFrame{
     private void reset() {
         labelList = new ArrayList<>(); // skapar ny lista med text-etikett som är tom
         randomNumberList = new ArrayList<>(); // skapar ny slump nummer lita som är tom
-        gamePanel.removeAll(); // tabort gamla panelen
+        gamePanel.removeAll(); // ta bort gamla panelen
     }
 
     // kontrollerar ifall spelet är avklarad
@@ -258,7 +258,7 @@ public class BrickGame extends JFrame{
         sizeManager = new SizeManager(4);
         changeColorScheme = new ChangeColorScheme();
         changeColorScheme.setColorScheme(""); //Change color to default
-        addMenue(); // Add Menu with listener
+        addMenu(); // Add Menu with listener
         addToNumberList(); //Add Numbers To List
         addToLabelList(); //Add JLabels To List.
         addComponents(); //Add All Components
@@ -268,7 +268,7 @@ public class BrickGame extends JFrame{
         sizeManager = new SizeManager(size);
         changeColorScheme = new ChangeColorScheme();
         changeColorScheme.setColorScheme(""); //Change color to default
-        addMenue(); // Add Menu with listener
+        addMenu(); // Add Menu with listener
         addToNumberList(); //Add Numbers To List
         addToLabelList(); //Add JLabels To List.
         addComponents(); //Add All Components
@@ -277,10 +277,10 @@ public class BrickGame extends JFrame{
 
     // Startar ett enkelt spel
     public void runEasy(){
-        addMenue(); // lägger till meny
+        addMenu(); // lägger till meny
         addToNumberListEasy(); // lägger till enkel nummer lista
         addToLabelList(); // lägger till labels
-        addComponents(); // lägger till swing compotenterna
+        addComponents(); // lägger till swing komponenterna
         addMouseListener(); // lägger till mus-lyssnare
     }
 
