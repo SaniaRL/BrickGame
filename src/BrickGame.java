@@ -89,6 +89,17 @@ public class BrickGame extends JFrame{
         }
     }
 
+    public void updateColor(){
+        gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bakgrundsfärgen för panelen i Swing
+        for(JLabel label : labelList){ // loopar igenom alla labels som vi har
+            if(label == getEmptyLabel()){
+                label.setBackground(changeColorScheme.getBackgroundColor()); // tom bricka får bakgrundsfärgen
+            }
+            else{
+                label.setBackground(changeColorScheme.getBrickColor()); // vanliga brickor (1 till 15) får brick färgen
+            }
+        }
+    }
     public void addMenu() {
         // skapar klickbar menu-item(meny-val) för Pink/rosa
         JMenuItem pink =new JMenuItem("Pink");
@@ -96,15 +107,7 @@ public class BrickGame extends JFrame{
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
                     // här är lambdas metodens implementation
                     changeColorScheme.setColorScheme("Pink"); // anger färgschemat Pink/rosa
-                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bakgrundsfärgen för panelen i Swing
-                    for(JLabel label : labelList){ // loopar igenom alla labels som vi har
-                        if(label == getEmptyLabel()){
-                            label.setBackground(changeColorScheme.getBackgroundColor()); // tom bricka får bakgrundsfärgen
-                        }
-                        else{
-                            label.setBackground(changeColorScheme.getBrickColor()); // vanliga brickor (1 till 15) får brick färgen
-                        }
-                    }
+                    updateColor();
                 } // här slutar lambdas metoden
         ); // här är slutparentes för actionListener metoden som tog en lambdas
 
@@ -114,15 +117,7 @@ public class BrickGame extends JFrame{
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
                     // här är lambdas metodens implementation
                     changeColorScheme.setColorScheme("Yellow"); // anger färgschemat yellow/gul
-                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bakgrundsfärgen för panelen i Swing
-                    for(JLabel label : labelList){ // loopar igenom alla labels som vi har
-                        if(label == getEmptyLabel()){
-                            label.setBackground(changeColorScheme.getBackgroundColor()); // tom bricka får bakgrundsfärgen
-                        }
-                        else{
-                            label.setBackground(changeColorScheme.getBrickColor()); // vanliga brickor (1 till 15) får brick färgen
-                        }
-                    }
+                    updateColor();
                 } // här slutar lambdas metoden
         ); // här är slutparentes för actionListener metoden som tog en lambdas
 
@@ -132,15 +127,7 @@ public class BrickGame extends JFrame{
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
                     // här är lambdas metodens implementation
                     changeColorScheme.setColorScheme("Blue"); // anger färgschemat blue/blå
-                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bakgrundsfärgen för panelen i Swing
-                    for(JLabel label : labelList){ // loopar igenom alla labels som vi har
-                        if(label == getEmptyLabel()){
-                            label.setBackground(changeColorScheme.getBackgroundColor()); // tom bricka får bakgrundsfärgen
-                        }
-                        else{
-                            label.setBackground(changeColorScheme.getBrickColor()); // vanliga brickor (1 till 15) får brick färgen
-                        }
-                    }
+                    updateColor();
                 } // här slutar lambdas metoden
         ); // här är slutparentes för actionListener metoden som tog en lambdas
 
@@ -150,15 +137,7 @@ public class BrickGame extends JFrame{
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
                     // här är lambdas metodens implementation
                     changeColorScheme.setColorScheme("Green"); // anger färgschemat green/grön
-                    gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bakgrundsfärgen för panelen i Swing
-                    for(JLabel label : labelList){ // loopar igenom alla labels som vi har
-                        if(label == getEmptyLabel()){
-                            label.setBackground(changeColorScheme.getBackgroundColor()); // tom bricka får bakgrundsfärgen
-                        }
-                        else{
-                            label.setBackground(changeColorScheme.getBrickColor()); // vanliga brickor (1 till 15) får brick färgen
-                        }
-                    }
+                    updateColor();
                 } // här slutar lambdas metoden
         ); // här är slutparentes för actionListener metoden som tog en lambdas
 
@@ -301,7 +280,6 @@ public class BrickGame extends JFrame{
     public void run(){
         sizeManager = new SizeManager(4);
         changeColorScheme = new ChangeColorScheme();
-        changeColorScheme.setColorScheme(""); //Change color to default
         addMenu(); // Add Menu with listener
         addToNumberList(); //Add Numbers To List
         addToLabelList(); //Add JLabels To List.
