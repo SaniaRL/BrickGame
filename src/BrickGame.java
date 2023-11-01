@@ -36,7 +36,22 @@ public class BrickGame extends JFrame{
                 randomNumberList.add(String.valueOf(i));
             }
         }
-        Collections.shuffle(randomNumberList);
+        while (!isSolvable(stringToInteger(randomNumberList))){
+            Collections.shuffle(randomNumberList);
+        }
+    }
+
+    public List<Integer> stringToInteger(List<String> stringList){
+        List<Integer> integerList = new ArrayList<>();
+        for (String string : stringList){
+            if(string.equals(" ")){
+                integerList.add(0);
+            }
+            else{
+                integerList.add(Integer.parseInt(string));
+            }
+        }
+        return integerList;
     }
 
     // metod som skapar enkelt spel
@@ -238,6 +253,34 @@ public class BrickGame extends JFrame{
         return completedGame;
     }
 
+    //CAN GAME BE SOLVED?
+    //region<AI-Generated Code>
+    public boolean isSolvable(List<Integer> puzzle) {
+        int inversions = 0;
+        int gridSize = (int) abs(Math.sqrt(puzzle.size()));
+
+        // Calculate the number of inversions
+        for (int i = 0; i < puzzle.size(); i++) {
+            for (int j = i + 1; j < puzzle.size(); j++) {
+                int tileA = puzzle.get(i);
+                int tileB = puzzle.get(j);
+                if (tileA > tileB) {
+                    inversions++;
+                }
+            }
+        }
+        // Check if solvable based on grid size and inversions
+        if (gridSize % 2 == 1) {
+            return inversions % 2 == 0;
+        } else {
+            int emptyPosition = puzzle.indexOf(0);
+            int emptyRow = emptyPosition / gridSize + 1;
+            return (inversions % 2 == 0 && (gridSize - emptyRow) % 2 == 1) ||
+                    (inversions % 2 == 1 && (gridSize - emptyRow) % 2 == 0);
+        }
+    }
+    //endregion
+
     public void addComponents(){
         setLayout(new BorderLayout());  //Set Layout
         setSize(600,600);   //Set Size - Should not be Square when we add a Button.
@@ -393,6 +436,7 @@ public class BrickGame extends JFrame{
                 }
             }
         }
+
         @Override
         public void mouseEntered(MouseEvent e) {
             super.mouseEntered(e);
