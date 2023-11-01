@@ -6,6 +6,9 @@ public class ChangeColorScheme {
     private Color inBetweenColor;
     private Color backgroundColor;
 
+    public ChangeColorScheme(){
+        defaultColor();
+    }
     public void setColorScheme(String color){
         switch (color){
             case "Pink" -> pinkColor();

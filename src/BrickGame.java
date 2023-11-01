@@ -92,6 +92,7 @@ public class BrickGame extends JFrame{
     public void updateColor(){
         gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bakgrundsfärgen för panelen i Swing
         for(JLabel label : labelList){ // loopar igenom alla labels som vi har
+            label.setBorder(BorderFactory.createLineBorder(changeColorScheme.getBackgroundColor())); // Border får bakgrundsfärg
             if(label == getEmptyLabel()){
                 label.setBackground(changeColorScheme.getBackgroundColor()); // tom bricka får bakgrundsfärgen
             }
