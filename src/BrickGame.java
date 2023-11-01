@@ -9,9 +9,6 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class BrickGame extends JFrame{
-    JMenu mainMenu; // skapar variabel för huvudmeny i Swing
-    JMenu sizeMenu;
-    JMenu colorMenu; // skapar variabel för färgmeny i Swing
     ChangeColorScheme changeColorScheme;
     SizeManager sizeManager;
 
@@ -20,7 +17,10 @@ public class BrickGame extends JFrame{
     //region<JFrame>
     JPanel gamePanel = new JPanel(); //Background JPanel to hold JLabels
     List<JLabel> labelList = new ArrayList<>(); //List to hold JLabels
-    List<String> randomNumberList = new ArrayList<>(); // nummer lista som är slumpad
+    List<String> randomNumberList = new ArrayList<>(); // nummerlista som är slumpad
+    JMenu mainMenu; // skapar variabel för huvudmeny i Swing
+    JMenu sizeMenu;
+    JMenu colorMenu; // skapar variabel för färgmeny i Swing
 
     //Strings instead of int for two reason.
     // 1. The values are not used as number-values.
@@ -40,17 +40,15 @@ public class BrickGame extends JFrame{
     }
 
     // metod som skapar enkelt spel
-    //TODO remove changes
     public void addToNumberListEasy(){
         // nummer 1 till 14 kommer i ordning
         for(int i = 1; i < sizeManager.getSize() - 1; i++){
             randomNumberList.add(String.valueOf(i));
         }
-        // lägger till tom bricka " "
+        // lägger till tom bricka" "
         randomNumberList.add(" ");
 
         // lägger till nummer 15
-        //TODO ta in värdet så det kan vara olika
         randomNumberList.add(String.valueOf(sizeManager.getSize() - 1));
     }
 
@@ -177,14 +175,22 @@ public class BrickGame extends JFrame{
         ); // här är slutparantes för actionlistener metoden som tog en lambdas
 
         // skapar meny variabel i Swing
+        colorMenu = new JMenu("Color"); // sätter label-texten till Color för menyn
+        colorMenu.add(pink); // lägger till Pink-menyItem i menyn
+        colorMenu.add(yellow); // lägger till Yellow-menyItem i menyn
+        colorMenu.add(blue); // lägger till Blue-menyItem i menyn
+        colorMenu.add(green); // lägger till Green-menyItem i menyn
+
+        // skapar meny variabel i Swing
         mainMenu = new JMenu("Menu"); // sätter label-texten till Menu för menyn
         sizeMenu = new JMenu("Size");
         mainMenu.add(newGame); // lägger till NewGame-menyItem i menyn
         mainMenu.add(newGameEasy); // lägger till NewGameEasy-menyItem i menyn
         mainMenu.add(sizeMenu);
+        mainMenu.add(colorMenu);
         mainMenu.add(closeGame); // lägger till Exit-menyItem i menyn
 
-        //skapar olika storlekar för sizemenu
+        //skapar olika storlekar för sizeMenu
         JMenuItem threeX3 = new JMenuItem("3 x 3");
         JMenuItem fourX4 = new JMenuItem("4 x 4");
         JMenuItem fiveX5 = new JMenuItem("5 x 5");
@@ -196,24 +202,17 @@ public class BrickGame extends JFrame{
         sizeMenu.add(eightX8);
         sizeMenu.add(tenX10);
 
-        //add actionListeneres to sizeMenu MenuItems
+        //add actionListener to sizeMenu MenuItems
         threeX3.addActionListener(ActiveEvent -> {reset(); run(3);});
         fourX4.addActionListener(ActiveEvent -> {reset(); run(4);});
         fiveX5.addActionListener(ActiveEvent -> {reset(); run(5);});
         eightX8.addActionListener(ActiveEvent -> {reset(); run(8);});
         tenX10.addActionListener(ActiveEvent -> {reset(); run(10);});
 
-        // skapar meny variabel i Swing
-        colorMenu = new JMenu("Color"); // sätter label-texten till Color för menyn
-        colorMenu.add(pink); // lägger till Pink-menyItem i menyn
-        colorMenu.add(yellow); // lägger till Yellow-menyItem i menyn
-        colorMenu.add(blue); // lägger till Blue-menyItem i menyn
-        colorMenu.add(green); // lägger till Green-menyItem i menyn
-
         // Skapar en meny-bar/rad
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(mainMenu); // lägger till huvud-menyn i meny-bar/rad
-        menuBar.add(colorMenu); // lägger till color-menyn i meny-bar/rad
+       // menuBar.add(colorMenu); // lägger till color-menyn i meny-bar/rad
 
         // lägger till menu-bar/rad i JFrame
         setJMenuBar(menuBar);
