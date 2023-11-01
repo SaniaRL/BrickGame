@@ -36,6 +36,7 @@ public class BrickGame extends JFrame{
                 randomNumberList.add(String.valueOf(i));
             }
         }
+        Collections.shuffle(randomNumberList);
         while (!isSolvable(stringToInteger(randomNumberList))){
             Collections.shuffle(randomNumberList);
         }
