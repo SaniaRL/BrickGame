@@ -264,7 +264,10 @@ public class BrickGame extends JFrame{
 
     public void addComponents(){
         setLayout(new BorderLayout());  //Set Layout
-        setSize(600,600);   //Set Size - Should not be Square when we add a Button.
+        setSize(600,600);   //Set Size
+        setTitle("Brick Game");
+        ImageIcon image = new ImageIcon("square.png");
+        setIconImage(image.getImage());
         setVisible(true);   //Make JFrame Visible.
         add(gamePanel, BorderLayout.CENTER);  //Background Panel is positioned Center. Button can be NORTH or SOUTH?
         setDefaultCloseOperation(EXIT_ON_CLOSE);    //Make the Close Button work.
