@@ -289,9 +289,6 @@ public class BrickGame extends JFrame{
     }
     public void run(int size){
         sizeManager = new SizeManager(size);
-        changeColorScheme = new ChangeColorScheme();
-        changeColorScheme.setColorScheme(""); //Change color to default
-        addMenu(); // Add Menu with listener
         addToNumberList(); //Add Numbers To List
         addToLabelList(); //Add JLabels To List.
         addComponents(); //Add All Components
