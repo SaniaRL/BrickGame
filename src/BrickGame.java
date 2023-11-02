@@ -149,7 +149,7 @@ public class BrickGame extends JFrame{
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
                     // här är lambdas metodens implementation
                     reset(); // reset(raderar värdet) alla variabler
-                    run(); // anropar run metoden för att starta nytt brick spel igen
+                    run(sizeManager.getSize()); // anropar run metoden för att starta nytt brick spel igen
             } // här slutar lambdas metoden
         ); // här är slutparentes för actionListener metoden som tog en lambdas
 
@@ -263,35 +263,36 @@ public class BrickGame extends JFrame{
     //endregion
 
     public void addComponents(){
-        setLayout(new BorderLayout());  //Set Layout
-        setSize(600,600);   //Set Size
+        setLayout(new BorderLayout());
+        setSize(600,600);
         setTitle("Brick Game");
         ImageIcon image = new ImageIcon("square.png");
         setIconImage(image.getImage());
-        setVisible(true);   //Make JFrame Visible.
-        add(gamePanel, BorderLayout.CENTER);  //Background Panel is positioned Center. Button can be NORTH or SOUTH?
-        setDefaultCloseOperation(EXIT_ON_CLOSE);    //Make the Close Button work.
-        setLocationRelativeTo(null);    //Make the Frame appear in the middle of the screen.
+        setVisible(true);
+        add(gamePanel, BorderLayout.CENTER);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
-        gamePanel.setLayout(new GridLayout(sizeManager.getXY(), sizeManager.getXY()));    //4 * 4 Layout for the 16 Labels.
-        gamePanel.setBackground(changeColorScheme.getBackgroundColor()); //Set Color. Color not important. Can be whatever.
-        gamePanel.setOpaque(true);    //Make Opaque so Background can be seen.
+        gamePanel.setLayout(new GridLayout(sizeManager.getXY(), sizeManager.getXY()));
+        gamePanel.setBackground(changeColorScheme.getBackgroundColor());
+        gamePanel.setOpaque(true);
     }
     //endregion
-
-    //Method to start Program instead of having the code in constructor.
-    //To avoid warning that the variable in main is unused.
-    public void run(){
+    public BrickGame(){
         sizeManager = new SizeManager(4);
         changeColorScheme = new ChangeColorScheme();
         addMenu(); // Add Menu with listener
+        addComponents(); //Add All Components
+    }
+  /*  public void run(){
         addToNumberList(); //Add Numbers To List
         addToLabelList(); //Add JLabels To List.
-        addComponents(); //Add All Components
         addMouseListener(); //Add MouseListener
     }
+
+   */
     public void run(int size){
-        sizeManager = new SizeManager(size);
+        sizeManager.setSize(size);
         addToNumberList(); //Add Numbers To List
         addToLabelList(); //Add JLabels To List.
         addComponents(); //Add All Components
@@ -311,7 +312,7 @@ public class BrickGame extends JFrame{
         //If we use this we can put the code in run() in constructor and still avoid warning
         @SuppressWarnings("unused")
         BrickGame brickGame = new BrickGame(); //Create new instance of BrickGame
-        brickGame.run(); //Method to run the program
+        brickGame.run(4); //Method to run the program
     }
 
     //region<I Couldn't make this code work well in another class but might move if I can make it work>
@@ -412,7 +413,7 @@ public class BrickGame extends JFrame{
                         "Congratulation", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
                     reset(); // reset/nollställer alla variabler
-                    run(); // startar ett nytt spel
+                    run(sizeManager.getXY()); // startar ett nytt spel
                 }
             }
         }
