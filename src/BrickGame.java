@@ -57,14 +57,14 @@ public class BrickGame extends JFrame{
 
     // metod som skapar enkelt spel
     public void addToNumberListEasy(){
-        // nummer 1 till 14 kommer i ordning
-        for(int i = 1; i < sizeManager.getSize() - 1; i++){
+        // nummer 1 till näst sista brickan kommer i ordning. Vi shufflar inte
+        for(int i = 1; i < sizeManager.getSize() - 1; i++){ // size -1 för att jag vill hoppa över två brikan
             randomNumberList.add(String.valueOf(i));
         }
         // lägger till tom bricka" "
         randomNumberList.add(" ");
 
-        // lägger till nummer 15
+        // lägger till sista brickan, en tom brcika
         randomNumberList.add(String.valueOf(sizeManager.getSize() - 1));
     }
 
@@ -94,25 +94,25 @@ public class BrickGame extends JFrame{
         for(JLabel label : labelList){ // loopar igenom alla labels som vi har
             label.setBorder(BorderFactory.createLineBorder(changeColorScheme.getBackgroundColor())); // Border får bakgrundsfärg
             if(label == getEmptyLabel()){
-                label.setBackground(changeColorScheme.getBackgroundColor()); // tom bricka får bakgrundsfärgen
+                label.setBackground(changeColorScheme.getBackgroundColor()); // Den tomma brickan får bakgrundsfärgen
             }
             else{
-                label.setBackground(changeColorScheme.getBrickColor()); // vanliga brickor (1 till 15) får brick färgen
+                label.setBackground(changeColorScheme.getBrickColor()); // vanliga brickor får brick färgen
             }
         }
     }
     public void addMenu() {
-        // skapar klickbar menu-item(meny-val) för Pink/rosa
+        // skapar klickbar menu-item(meny-val) när man väljer Pink/rosa
         JMenuItem pink =new JMenuItem("Pink");
-        pink.addActionListener( // en ActionListener metod som tar en lambdas
-                actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
+        pink.addActionListener( // PinkMenu valet lägger till en ActionListener metod som tar en lambdas
+                actionEvent -> {  // actionEvent är parameter som lambdas metoden har. måsvingarna visa var implementationen börjar och slutar.
                     // här är lambdas metodens implementation
-                    changeColorScheme.setColorScheme("Pink"); // anger färgschemat Pink/rosa
-                    updateColor();
+                    changeColorScheme.setColorScheme("Pink"); // om någon anger färgschemat Pink/rosa kommer java att köra det färgen.
+                    updateColor();//
                 } // här slutar lambdas metoden
         ); // här är slutparentes för actionListener metoden som tog en lambdas
 
-        // skapar klickbar menu-item(meny-val) för yellow/gul
+        // skapat klickbar menu-item(meny-val) för yellow/gul
         JMenuItem yellow =new JMenuItem("Yellow");
         yellow.addActionListener( // en ActionListener metod som tar en lambdas
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
@@ -143,7 +143,7 @@ public class BrickGame extends JFrame{
         ); // här är slutparentes för actionListener metoden som tog en lambdas
 
 
-        // skapar klickbar menu-item(meny-val) för NewGame
+        // skapar klickbar menu-item(meny-val) för NewGame.
         JMenuItem newGame =new JMenuItem("New game");
         newGame.addActionListener( // en ActionListener metod som tar en lambdas
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
@@ -217,21 +217,29 @@ public class BrickGame extends JFrame{
     // reset metod som nollställer/raderar värdet i alla variabler
     private void reset() {
         labelList = new ArrayList<>(); // skapar ny lista med text-etikett som är tom
-        randomNumberList = new ArrayList<>(); // skapar ny slump nummer lita som är tom
-        gamePanel.removeAll(); // ta bort gamla panelen
+        randomNumberList = new ArrayList<>(); // skapar ny slump nummer lista som är tom
+        gamePanel.removeAll(); // ta bort gamla panelen innehåll
     }
 
     // kontrollerar ifall spelet är avklarad
     private boolean isGameCompleted() {
         boolean completedGame = true; // skapar boolean variabeln 'completedGame' som ska ange ifall spelaren klarat av spelet
-        // itererar/loopar igen alla labels (hoppar över sista brickan)
-        for (int i = 1; i < labelList.size(); i++) {
+        // itererar/loopar igenom alla labels (hoppar över sista brickan)
+        for (int i = 1; i < labelList.size(); i++) { // loop startar med 1
             String siffraString = i + ""; // skapar string variabel som håller reda på vilket loop nummer vi är på (startar med nummer 1)
             if (!siffraString.equals(labelList.get(i-1).getText())) { // get index startar från 0 (för vi tar minus 1)
                 completedGame = false; // nu vet vi att spelet inte är avklarat, vi sätter 'completedGame' till false
             }
         }
         return completedGame;
+    }
+    // Startar ett enkelt spel
+    public void runEasy(){
+        addMenu(); // lägger till meny
+        addToNumberListEasy(); // lägger till enkel nummer lista utan shuffle
+        addToLabelList(); // lägger till labels
+        addComponents(); // lägger till swing komponenterna
+        addMouseListener(); // lägger till mus-lyssnare
     }
 
     //CAN GAME BE SOLVED?
@@ -298,14 +306,7 @@ public class BrickGame extends JFrame{
         addMouseListener(); //Add MouseListener
     }
 
-    // Startar ett enkelt spel
-    public void runEasy(){
-        addMenu(); // lägger till meny
-        addToNumberListEasy(); // lägger till enkel nummer lista
-        addToLabelList(); // lägger till labels
-        addComponents(); // lägger till swing komponenterna
-        addMouseListener(); // lägger till mus-lyssnare
-    }
+
 
     public static void main(String[] args) {
         //If we use this we can put the code in run() in constructor and still avoid warning
