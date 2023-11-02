@@ -149,7 +149,7 @@ public class BrickGame extends JFrame{
                 actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
                     // här är lambdas metodens implementation
                     reset(); // reset(raderar värdet) alla variabler
-                    run(sizeManager.getSize()); // anropar run metoden för att starta nytt brick spel igen
+                    run(sizeManager.getXY()); // anropar run metoden för att starta nytt brick spel igen
             } // här slutar lambdas metoden
         ); // här är slutparentes för actionListener metoden som tog en lambdas
 
@@ -289,7 +289,6 @@ public class BrickGame extends JFrame{
         addToLabelList(); //Add JLabels To List.
         addMouseListener(); //Add MouseListener
     }
-
    */
     public void run(int size){
         sizeManager.setSize(size);
