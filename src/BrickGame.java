@@ -12,21 +12,14 @@ public class BrickGame extends JFrame{
     ChangeColorScheme changeColorScheme;
     SizeManager sizeManager;
 
-    //regions are to hide the code in the region - so it's easier to navigate
-
     //region<JFrame>
-    JPanel gamePanel = new JPanel(); //Background JPanel to hold JLabels
-    List<JLabel> labelList = new ArrayList<>(); //List to hold JLabels
-    List<String> randomNumberList = new ArrayList<>(); // nummerlista som är slumpad
-    JMenu mainMenu; // skapar variabel för huvudmeny i Swing
+    JPanel gamePanel = new JPanel();
+    List<JLabel> labelList = new ArrayList<>();
+    List<String> randomNumberList = new ArrayList<>();
+    JMenu mainMenu;
     JMenu sizeMenu;
-    JMenu colorMenu; // skapar variabel för färgmeny i Swing
+    JMenu colorMenu;
 
-    //Strings instead of int for two reason.
-    // 1. The values are not used as number-values.
-    // 2. We can use the method JLabel.addText() directly without typecasting.
-
-    //Updated code to avoid repetition, and keep code short and easy to manage.
     public void addToNumberList(){
         for(int i = 1; i < sizeManager.getSize() + 1; i++){
             if(i == sizeManager.getSize()){
@@ -57,18 +50,14 @@ public class BrickGame extends JFrame{
 
     // metod som skapar enkelt spel
     public void addToNumberListEasy(){
-        // nummer 1 till näst sista brickan kommer i ordning. Vi shufflar inte
-        for(int i = 1; i < sizeManager.getSize() - 1; i++){ // size -1 för att jag vill hoppa över två brikan
+        for(int i = 1; i < sizeManager.getSize() - 1; i++){
             randomNumberList.add(String.valueOf(i));
         }
-        // lägger till tom bricka" "
         randomNumberList.add(" ");
 
-        // lägger till sista brickan, en tom brcika
         randomNumberList.add(String.valueOf(sizeManager.getSize() - 1));
     }
 
-    //Updated code to avoid repetition, and keep code short and easy to manage.
     public void addToLabelList(){
         for(int i = 0; i < sizeManager.getSize(); i++){
             JLabel label = new JLabel();
@@ -76,117 +65,101 @@ public class BrickGame extends JFrame{
             labelList.add(label);
             gamePanel.add(label);
 
-            label.setHorizontalAlignment(JLabel.CENTER); //Align Center on the X-axis.
-            label.setVerticalAlignment(JLabel.CENTER); //Align Center on the Y-axis.
-            label.setBackground(changeColorScheme.getBrickColor()); //Color Choice. Not important.
+            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setVerticalAlignment(JLabel.CENTER);
+            label.setBackground(changeColorScheme.getBrickColor());
 
-            label.setFont(new Font("Arial", Font.BOLD, 25)); //Font Choice. Not Important.
-            label.setOpaque(true); //Make Opaque so Background will show.
-            label.setBorder(BorderFactory.createLineBorder(changeColorScheme.getBackgroundColor())); //Create Border that matches BackgroundPane.
+            label.setFont(new Font("Arial", Font.BOLD, 25));
+            label.setOpaque(true);
+            label.setBorder(BorderFactory.createLineBorder(changeColorScheme.getBackgroundColor()));
             if(label.getText().equals(" ")){
-                label.setBackground(changeColorScheme.getBackgroundColor()); //Make the "empty" JLabel black.
+                label.setBackground(changeColorScheme.getBackgroundColor());
             }
         }
     }
 
     public void updateColor(){
-        gamePanel.setBackground(changeColorScheme.getBackgroundColor()); // anger bakgrundsfärgen för panelen i Swing
-        for(JLabel label : labelList){ // loopar igenom alla labels som vi har
-            label.setBorder(BorderFactory.createLineBorder(changeColorScheme.getBackgroundColor())); // Border får bakgrundsfärg
+        gamePanel.setBackground(changeColorScheme.getBackgroundColor());
+        for(JLabel label : labelList){
+            label.setBorder(BorderFactory.createLineBorder(changeColorScheme.getBackgroundColor()));
             if(label == getEmptyLabel()){
-                label.setBackground(changeColorScheme.getBackgroundColor()); // Den tomma brickan får bakgrundsfärgen
+                label.setBackground(changeColorScheme.getBackgroundColor());
             }
             else{
-                label.setBackground(changeColorScheme.getBrickColor()); // vanliga brickor får brick färgen
+                label.setBackground(changeColorScheme.getBrickColor());
             }
         }
     }
     public void addMenu() {
-        // skapar klickbar menu-item(meny-val) när man väljer Pink/rosa
         JMenuItem pink =new JMenuItem("Pink");
-        pink.addActionListener( // PinkMenu valet lägger till en ActionListener metod som tar en lambdas
-                actionEvent -> {  // actionEvent är parameter som lambdas metoden har. måsvingarna visa var implementationen börjar och slutar.
-                    // här är lambdas metodens implementation
-                    changeColorScheme.setColorScheme("Pink"); // om någon anger färgschemat Pink/rosa kommer java att köra det färgen.
-                    updateColor();//
-                } // här slutar lambdas metoden
-        ); // här är slutparentes för actionListener metoden som tog en lambdas
+        pink.addActionListener(
+                actionEvent -> {
+                    changeColorScheme.setColorScheme("Pink");
+                    updateColor();
+                }
+        );
 
-        // skapat klickbar menu-item(meny-val) för yellow/gul
         JMenuItem yellow =new JMenuItem("Yellow");
-        yellow.addActionListener( // en ActionListener metod som tar en lambdas
-                actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
-                    // här är lambdas metodens implementation
-                    changeColorScheme.setColorScheme("Yellow"); // anger färgschemat yellow/gul
+        yellow.addActionListener(
+                actionEvent -> {
+                    changeColorScheme.setColorScheme("Yellow");
                     updateColor();
-                } // här slutar lambdas metoden
-        ); // här är slutparentes för actionListener metoden som tog en lambdas
+                }
+        );
 
-        // skapar klickbar menu-item(meny-val) för blue/blå
         JMenuItem blue =new JMenuItem("Blue");
-        blue.addActionListener( // en ActionListener metod som tar en lambdas
-                actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
-                    // här är lambdas metodens implementation
-                    changeColorScheme.setColorScheme("Blue"); // anger färgschemat blue/blå
+        blue.addActionListener(
+                actionEvent -> {
+                    changeColorScheme.setColorScheme("Blue");
                     updateColor();
-                } // här slutar lambdas metoden
-        ); // här är slutparentes för actionListener metoden som tog en lambdas
+                }
+        );
 
-        // skapar klickbar menu-item(meny-val) för green/grön
         JMenuItem green =new JMenuItem("Green");
-        green.addActionListener( // en ActionListener metod som tar en lambdas
-                actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
-                    // här är lambdas metodens implementation
-                    changeColorScheme.setColorScheme("Green"); // anger färgschemat green/grön
+        green.addActionListener(
+                actionEvent -> {
+                    changeColorScheme.setColorScheme("Green");
                     updateColor();
-                } // här slutar lambdas metoden
-        ); // här är slutparentes för actionListener metoden som tog en lambdas
+                }
+        );
 
 
-        // skapar klickbar menu-item(meny-val) för NewGame.
         JMenuItem newGame =new JMenuItem("New game");
-        newGame.addActionListener( // en ActionListener metod som tar en lambdas
-                actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
-                    // här är lambdas metodens implementation
-                    reset(); // reset(raderar värdet) alla variabler
-                    run(sizeManager.getXY()); // anropar run metoden för att starta nytt brick spel igen
-            } // här slutar lambdas metoden
-        ); // här är slutparentes för actionListener metoden som tog en lambdas
+        newGame.addActionListener(
+                actionEvent -> {
+                    reset();
+                    run(sizeManager.getXY());
+            }
+        );
 
-        // skapar klickbar menu-item(meny-val) för NewGame Easy
         JMenuItem newGameEasy =new JMenuItem("New game Easy");
-        newGameEasy.addActionListener( // en ActionListener metod som tar en lambdas
-                actionEvent -> {  // lambdas metoden börjar här och tar en actionEvent parameter
-                    // här är lambdas metodens implementation
-                    reset(); // reset(raderar värdet) alla variabler
-                    runEasy(); // anropar run-easy metoden för att starta nytt brick spel igen
-                } // här slutar lambdas metoden
-        ); // här är slutparentes för actionListener metoden som tog en lambdas
+        newGameEasy.addActionListener(
+                actionEvent -> {
+                    reset();
+                    runEasy();
+                }
+        );
 
-        // skapar klickbar menu-item(meny-val) för Exit
         JMenuItem closeGame =new JMenuItem("Exit");
-        closeGame.addActionListener( // en ActionListener metod som tar en lambdas
-                actionEvent -> // lambdas metoden börjar här och tar en actionEvent parameter
-                        System.exit(0) // här är lambdas metodens implementation, stänger ner Java programmet
-        ); // här är slutparentes för actionListener metoden som tog en lambdas
+        closeGame.addActionListener(
+                actionEvent ->
+                        System.exit(0)
+        );
 
-        // skapar meny variabel i Swing
-        colorMenu = new JMenu("Color"); // sätter label-texten till Color för menyn
-        colorMenu.add(pink); // lägger till Pink-menyItem i menyn
-        colorMenu.add(yellow); // lägger till Yellow-menyItem i menyn
-        colorMenu.add(blue); // lägger till Blue-menyItem i menyn
-        colorMenu.add(green); // lägger till Green-menyItem i menyn
+        colorMenu = new JMenu("Color");
+        colorMenu.add(pink);
+        colorMenu.add(yellow);
+        colorMenu.add(blue);
+        colorMenu.add(green);
 
-        // skapar meny variabel i Swing
-        mainMenu = new JMenu("Menu"); // sätter label-texten till Menu för menyn
+        mainMenu = new JMenu("Menu");
         sizeMenu = new JMenu("Size");
-        mainMenu.add(newGame); // lägger till NewGame-menyItem i menyn
-        mainMenu.add(newGameEasy); // lägger till NewGameEasy-menyItem i menyn
+        mainMenu.add(newGame);
+        mainMenu.add(newGameEasy);
         mainMenu.add(sizeMenu);
         mainMenu.add(colorMenu);
-        mainMenu.add(closeGame); // lägger till Exit-menyItem i menyn
+        mainMenu.add(closeGame);
 
-        //skapar olika storlekar för sizeMenu
         JMenuItem threeX3 = new JMenuItem("3 x 3");
         JMenuItem fourX4 = new JMenuItem("4 x 4");
         JMenuItem fiveX5 = new JMenuItem("5 x 5");
@@ -198,51 +171,45 @@ public class BrickGame extends JFrame{
         sizeMenu.add(eightX8);
         sizeMenu.add(tenX10);
 
-        //add actionListener to sizeMenu MenuItems
         threeX3.addActionListener(ActiveEvent -> {reset(); run(3);});
         fourX4.addActionListener(ActiveEvent -> {reset(); run(4);});
         fiveX5.addActionListener(ActiveEvent -> {reset(); run(5);});
         eightX8.addActionListener(ActiveEvent -> {reset(); run(8);});
         tenX10.addActionListener(ActiveEvent -> {reset(); run(10);});
 
-        // Skapar en meny-bar/rad
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(mainMenu); // lägger till huvud-menyn i meny-bar/rad
-       // menuBar.add(colorMenu); // lägger till color-menyn i meny-bar/rad
 
-        // lägger till menu-bar/rad i JFrame
         setJMenuBar(menuBar);
     }
 
-    // reset metod som nollställer/raderar värdet i alla variabler
     private void reset() {
-        labelList = new ArrayList<>(); // skapar ny lista med text-etikett som är tom
-        randomNumberList = new ArrayList<>(); // skapar ny slump nummer lista som är tom
-        gamePanel.removeAll(); // ta bort gamla panelen innehåll
+        labelList = new ArrayList<>();
+        randomNumberList = new ArrayList<>();
+        gamePanel.removeAll();
     }
 
     // kontrollerar ifall spelet är avklarad
     private boolean isGameCompleted() {
-        boolean completedGame = true; // skapar boolean variabeln 'completedGame' som ska ange ifall spelaren klarat av spelet
-        // itererar/loopar igenom alla labels (hoppar över sista brickan)
-        for (int i = 1; i < labelList.size(); i++) { // loop startar med 1
-            String siffraString = i + ""; // skapar string variabel som håller reda på vilket loop nummer vi är på (startar med nummer 1)
-            if (!siffraString.equals(labelList.get(i-1).getText())) { // get index startar från 0 (för vi tar minus 1)
-                completedGame = false; // nu vet vi att spelet inte är avklarat, vi sätter 'completedGame' till false
+        boolean completedGame = true;
+        for (int i = 1; i < labelList.size(); i++) {
+            String siffraString = i + "";
+            if (!siffraString.equals(labelList.get(i-1).getText())) {
+                completedGame = false;
             }
         }
         return completedGame;
     }
-    // Startar ett enkelt spel
+
     public void runEasy(){
-        addMenu(); // lägger till meny
-        addToNumberListEasy(); // lägger till enkel nummer lista utan shuffle
-        addToLabelList(); // lägger till labels
-        addComponents(); // lägger till swing komponenterna
-        addMouseListener(); // lägger till mus-lyssnare
+        addMenu();
+        addToNumberListEasy();
+        addToLabelList();
+        addComponents();
+        addMouseListener();
     }
 
-    //CAN GAME BE SOLVED?
+
     //region<AI-Generated Code>
     public boolean isSolvable(List<Integer> puzzle) {
         int inversions = 0;
@@ -289,49 +256,38 @@ public class BrickGame extends JFrame{
     public BrickGame(){
         sizeManager = new SizeManager(4);
         changeColorScheme = new ChangeColorScheme();
-        addMenu(); // Add Menu with listener
-        addComponents(); //Add All Components
+        addMenu();
+        addComponents();
     }
-  /*  public void run(){
-        addToNumberList(); //Add Numbers To List
-        addToLabelList(); //Add JLabels To List.
-        addMouseListener(); //Add MouseListener
-    }
-   */
+
     public void run(int size){
         sizeManager.setSize(size);
-        addToNumberList(); //Add Numbers To List
-        addToLabelList(); //Add JLabels To List.
-        addComponents(); //Add All Components
-        addMouseListener(); //Add MouseListener
+        addToNumberList();
+        addToLabelList();
+        addComponents();
+        addMouseListener();
     }
-
-
 
     public static void main(String[] args) {
-        //If we use this we can put the code in run() in constructor and still avoid warning
         @SuppressWarnings("unused")
-        BrickGame brickGame = new BrickGame(); //Create new instance of BrickGame
-        brickGame.run(4); //Method to run the program
+        BrickGame brickGame = new BrickGame();
+        brickGame.run(4);
     }
 
-    //region<I Couldn't make this code work well in another class but might move if I can make it work>
 
-    //Method to find the JLabel that is currently empty (containing " ")
     public JLabel getEmptyLabel(){
-        JLabel emptyLabel = null; //This method returns a JLabel, so we need to initiate it. It starts as null.
-        for (JLabel label : labelList){ //For-loop for each JLabel in labelList.
-            if(label.getText().equals(" ")){ //Only performs code-block if JLabel is the "empty" one.
-                emptyLabel = label; //Gives the reference to the "empty" JLabel to the locally declared empty JLabel.
+        JLabel emptyLabel = null;
+        for (JLabel label : labelList){
+            if(label.getText().equals(" ")){
+                emptyLabel = label;
             }
         }
-        return emptyLabel; //Returns the actual emptyLabel - because the references points to the same address.
+        return emptyLabel;
     }
-    //This code can be done in the Mouse Listener
     public void addMouseListener(){
         int empty = labelList.indexOf(getEmptyLabel());
-        int x = empty % sizeManager.getXY(); //x = 0, 1, 2, 3
-        int y = empty / sizeManager.getXY(); //y = 0, 1, 2, 3
+        int x = empty % sizeManager.getXY();
+        int y = empty / sizeManager.getXY();
         for(JLabel label : labelList){
             if (sizeManager.getX(labelList.indexOf(label)) == x || sizeManager.getY(labelList.indexOf(label)) == y ){
                 label.addMouseListener(brickMouseAdapter);
@@ -341,9 +297,8 @@ public class BrickGame extends JFrame{
         }
     }
 
-    //Method to change Position of the text and color of the JLabel with the text and color of the "empty" JLabel
     public void changePosition(JLabel label){
-        JLabel emptyLabel = getEmptyLabel(); //Declare JLabel variable temp; Temporary reference that points to the "empty" JLabel
+        JLabel emptyLabel = getEmptyLabel();
         String tempText = label.getText();
         emptyLabel.setText(tempText);
         emptyLabel.setBackground(changeColorScheme.getBrickColor());
@@ -377,27 +332,22 @@ public class BrickGame extends JFrame{
 
                 int xLoop = abs(((labelList.indexOf(getEmptyLabel()) - iLabelClicked)) / sizeManager.getXY());
                 int yLoop = abs(iEmptyLabel - iLabelClicked);
-                //  3 7 11 11 7 3
-                //THIS CODE SEEMS TO WORK  -  SOON
-                //Up - works the best of them
-                if(xLabel == xEmptyLabel && iEmptyLabel > iLabelClicked){
+
+               if(xLabel == xEmptyLabel && iEmptyLabel > iLabelClicked){
                     for(int i = 0; i < xLoop; i++){
                         changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) - sizeManager.getXY()));
                     }
                 }
-                //Down - is messing with me
                 if(xLabel == xEmptyLabel && iEmptyLabel < iLabelClicked){
                     for(int i = 0; i < xLoop; i++){
                         changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) + sizeManager.getXY()));
                     }
                 }
-                //Right - THIS ONE WORKS BUT WHY?
                 if(yLabel == yEmptyLabel && iEmptyLabel > iLabelClicked){
                     for(int i = 0; i < yLoop; i++){
                         changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) - 1));
                     }
                 }
-                //Left - works a bit
                 if(yLabel == yEmptyLabel && iEmptyLabel < iLabelClicked){
                     for(int i = 0; i < yLoop; i++){
                         changePosition(labelList.get(labelList.indexOf(getEmptyLabel()) + 1));
@@ -408,12 +358,12 @@ public class BrickGame extends JFrame{
                 repaint();
                 revalidate();
             }
-            if (isGameCompleted()) { // kontrollerar ifall spelaren klarat av spelet
+            if (isGameCompleted()) {
                 int result = JOptionPane.showConfirmDialog(null, "You have completed the game, want to play a new game?",
                         "Congratulation", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
-                    reset(); // reset/nollställer alla variabler
-                    run(sizeManager.getXY()); // startar ett nytt spel
+                    reset();
+                    run(sizeManager.getXY());
                 }
             }
         }
@@ -464,5 +414,4 @@ public class BrickGame extends JFrame{
             }
         }
     };
-    //endregion
 }
